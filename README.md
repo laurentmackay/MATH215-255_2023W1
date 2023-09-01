@@ -4,7 +4,7 @@ Course notes for MATH 215/255 Winter Term 1 2023/24
 
 Use mklecture.sh to make the full set of solutions.
 
-## Ex:
+#### Ex:
 
 sh mklecture.sh Lecture_1
 
