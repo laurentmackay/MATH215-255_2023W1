@@ -1,0 +1,187 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+\settoggle{covered}{true}
+\begin{document}
+\section{Introduction}
+\subsection{Overview}
+\slide[Differential Equations]{
+\vfill
+\enum{
+
+\item What are they and why do we solve them?
+\item Terminology
+\item Graphical intuition and the direction field
+}\vfill
+}
+\subsection{Preliminaries}
+\slide[What is a Differential Equation?]{\vspace{-.5em}
+A differential equation (DE) is an equation involving an unknown function $y$ and atleast one derivative of $y$ w.r.t. an independent variable.
+\vfill
+\twomini[.8]{.02}{.98}{\hspace{.15cm}}{\itmz{
+\item [Given:]  A DE with an unknown function $y(t)$. \hfill  \student{e.x., $\carray{\dd{y}{t} = - 3 y(t) \\ \text{\uline{or}} \\ \\y\p = -3y}$}
+\item[Task:]  Find the function(s) $y(t)$.\hfill  \student{Solution: $y(t)=C_1e^{-3t}$}
+\vfill
+\item[Tools:]
+\itmz{\item Calculus (i.e., integration/differentiation) \item Guess and check (does some function $f(t)$ make LHS=RHS?) \item Specialized procedures (informed by experience geussing) \item Geometry/Linear Algebra (useful for systems of DEs)}
+}
+}
+}
+
+\slide[Example: Skydiving \hfill\begin{minipage}{0.25\textwidth}{ \includegraphics[height=1cm]{images/airplane.pdf}}\end{minipage} ]{
+\begin{center}
+\includegraphics[height=2cm]{images/skydiver_solo.pdf}
+\end{center}
+Newton's Second Law:\[F=ma\]
+\student{\algn{
+ma &= \underbrace{-mg}_{\text{gravitational force}} \hspace{2em} \underbrace{-\mu v}_{\text{drag force}}\\
+a&=v'\\
+\Aboxed{mv' &= -mg - \mu v} \qquad \text{DE for } v(t)
+}
+}
+}
+
+\slide[Example: Epidemiology]{
+Kermack \& McKendrick's SIR model\subitem{
+\uline{S}usceptible $\rightarrow$ \uline{I}nfected $\rightarrow$ \uline{R}ecovered}
+\vfill
+System of 3 ordinary differential equations:
+\twomini[.4]{.65}{.33}{
+\algn{
+\dd{S}{t} & = \mu (I+R)  - \beta SI \\
+\dd{I}{t} &= \beta SI - \gamma  I - \mu I\\
+ \dd{R}{t} &= \gamma I - \mu R
+}
+}{
+\algn{
+t & = \text{time}\\
+\beta & =\text{infection rate}\\
+\gamma &=\text{recovery rate}\\
+\mu &= \text{birth/death rate}
+}
+}
+\vfill
+Reproduction number: $R_0=\frac{\beta}{\mu+\gamma}$
+\enum{\item $R_0>1$: endemic equilibrium \item $R_0<1$: disease dies out \hfill - \hfill basic idea behind "flatten the curve"}
+}
+
+\subsection{Terminology}
+
+
+\slide[Terminology: ODEs vs PDEs]{
+\itmz{
+\item Ordinary differential equation (ODE) \student{\hfill (covered in this course)}
+\student{\subitem{A DE with derivatives w.r.t. only one independent variable. \vfill\item $\dd{y}{t} = y(t) + 3 \qquad \text{or} \qquad \dd{y}{t} = \sin(y) + \cos(t) $ }}\vfill
+\item Partial differential equation (PDE) \student{\hfill (not covered in this course)}
+\student{\subitem{A DE with derivatives w.r.t multiple independent variable. \vfill
+\item Heat/Diffusion eq: $\pd{u}{t} = D\pdn{u}{x}{2}$\vfill
+\item Wave eq: $\pdn{u}{t}{2} = c \pdn{u}{x}{2}$\vfill
+\item Partial derivatives are necessary for solutions to agree when changing coordinate systems (e.g., switch from cartesian to polar coordinates)
+}}
+}
+}
+
+
+\slide[Terminology: Order of a DE]{
+The highest derivative that appears in the DE.
+\itmz{
+\item $y\p=y+3$ \hspace{2em} \student{first order}
+\item  $y\p=y^2+9$  \hspace{2em} \student{first order}
+\item  $\left(\dd{y}{t}\right)^2=\tan(t)$  \hspace{2em} \student{first order}
+\item  $y\pp=-y$  \hspace{2em} \student{second order}
+\item  $\ddn{y}{x}{4}=ky$  \hspace{2em} \student{fourth order}
+}
+}
+
+\slide[Terminology: Operator Form  \hfill $\Rightarrow$ \hfill $\op{y(t)} = f(t)$]{\vspace{-0.5em}
+Everything that depends on the unknown function goes on one side of the equal sign and everything else on the other.\vfill
+\subitem{ $\dd{y}{t} = y(t) + 3 \quad \to \quad \student{\dd{y}{t} - y(t) = 3}$ \vfill \student{\subitem{$\op{y}=f\p-y, \quad f(t) = 3$}}\vfill
+\item  $\dd{y}{t} =\sin(y) + \cos(t) \quad \to \quad \student{\dd{y}{t} - \sin(y) = \cos(t)}$ \vfill \student{\subitem{$\op{y}=f\p-\sin(y), \quad f(t) = \cos(t)$}\vfill}
+}
+\vfill
+
+The operator $\op{\cdot}$, encodes the "intrinsic" dynamics that the ODE is modelling.  \student{\subitem{Force-displacement relationship of a spring. \item Velocity-drag relationship of a viscous fluid.}}
+
+}
+
+\slide[Terminology: Linearity of DEs \hfill - \hfill $\op{y(t)} = f(t)$ ]{
+If the operator $\op{\cdot}$ is linear, then the DE is linear.
+\vfill
+\uline{Conditions for linearity:}\vfill
+Given any two functions $f$ and $g$ and a constant $c$, a linear operator satisfies
+
+\enum{
+\item\student{ $\op{f+g}=\op{f}+\op{g}$}\vfill
+\item\student{ $\op{cf}=c\op{f}$}\vfill
+}
+\uline{In practice:} does the operator have any nonlinear functions?\vfill
+\twomini[0.2]{0.5}{0.5}{
+\ex{$\op{y}=y''+y$}\\~\\
+\centering
+\student{Linear}
+}{
+\ex{$\op{y}=y'+\sin(y)$}\\~\\
+\centering
+\student{Nonlinear}
+}
+
+}
+
+\slide[Terminology: Autonomous DEs \hfill - \hfill $\op{y(t)} = f(t)$]{
+If both $\op{\cdot}$ and $f(t)$ do not explicitly depend on the independent variable, then the DE is autonomous. \vfill 
+
+\itmz{
+\item $y\p=y$  \student{  $\to \quad y\p-y=0$ \hfill Autonomous}
+\item  $y\p=y^2+3$   \student{  $\to \quad \dd{y}{t}-y^2=3$ \hfill Autonomous}
+\item  $\dd{y}{t}=y+\tan(t)$   \student{  $\to \quad \dd{y}{t}-y=\tan(t)$ \hfill Non-autonomous}
+\item  $\dd{y}{t}=-3ty$  \student{  $\to \quad \dd{y}{t}+3ty=0$ \hfill Non-autonomous}
+
+}
+\vfill
+$f(t)$ is often called the (external) forcing term. \vfill \student{ constant or zero-forcing $\Rightarrow$ Autonomous DE }
+
+}
+
+\slide[Classifying ODEs]{
+\itmz{\item $x\pp + x^2 = t$ \subitem{Order: \student{2} \item Linear: \student{No} \item Autnomous: \student{No}}\vfill
+\item $\ddn{x}{t}{4} = 0$ \subitem{Order: \student{4} \item Linear: \student{Yes} \item Autnomous: \student{Yes}}
+}
+}
+\slide[Terminology: Solution to an ODE]{
+A solution of an ODE is a function that satisifes the ODE.\vfill
+\ex{Is $y=Ce^{-t}+t-1$ a solution to $y\p+y=t$?}
+\student{
+\algn{y\p&=-Ce^{-t}+1\\
+y\p+y&=\cancel{-Ce^{-t}}+\cancel{1} + \cancel{  Ce^{-t}}+t-\cancel{1}\\
+&=t\quad \checkmark
+}}Here $C$ is an arbitrary constant that can have any value.\vfill
+Any solution with an arbitrary constant is called a \student{\uline{general solution}}
+\vfill
+We can obtain a unique solution by imposing some constaint, a solution with no arbitrary constants is called a \student{\uline{particular solution}}
+ 
+\vfill
+}
+
+\slide[Initial Value Problems]{\vspace{-0.75em}
+ODEs of the form\[\op{y} =f(t), \text{ with } y(t_0)=y_0,\] where $t_0$ and $y_0$ are numerical values (usually real-valued).
+\vfill
+\ex{Find the particular solution to $y\p+y=t$ with $y(0)=0$?}\vfill
+\student{
+Start with the general solution
+\algn{y(t)&=Ce^{-t}+t-1\intertext{evaluate at $t=t_0=0$, make that equal to $y_0=0$}
+y(0) &= C-1 = 0 \quad \Rightarrow C=1\\
+\Aboxed{y(t) &=e^{-t}+t-1}}}
+}
+
+\slide[Summary]{
+\enum{\item What are DEs?
+\subitem{Equations involving unknown function(s) and function derivatives. \item Specify rates of change of certain quantities. \item Useful for modelling many natural phenomena.}\vfill
+\item Terminology \subitem{ODEs (\& PDEs). 
+\item Order of DEs, Linear DEs, Autonomous DEs, Solutions to DEs}\vfill
+\item Initial Value Problems  \subitem{ The most "standard" way to obtain a unique solution \item Specify solution value at some initial time}
+}
+
+}
+\end{document}
