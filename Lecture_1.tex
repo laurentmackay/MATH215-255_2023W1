@@ -13,7 +13,7 @@
 
 \item What are they and why do we solve them?
 \item Terminology
-\item Graphical intuition and the direction field
+
 }\vfill
 }
 \subsection{Preliminaries}
@@ -36,10 +36,11 @@ A differential equation (DE) is an equation involving an unknown function $y$ an
 \end{center}
 Newton's Second Law:\[F=ma\]
 \student{\algn{
-ma &= \underbrace{-mg}_{\text{gravitational force}} \hspace{2em} \underbrace{-\mu v}_{\text{drag force}}\\
-a&=v'\\
-\Aboxed{mv' &= -mg - \mu v} \qquad \text{DE for } v(t)
-}
+ma &= \underbrace{-mg}_{\text{gravitational force}} \hspace{2em} \underbrace{-\mu v}_{\text{drag force}}\\\\
+a&=v'
+}\vfill
+\[ \boxed{mv' = -mg - \mu v} \qquad \text{DE for } v(t) \]
+\vfill
 }
 }
 
@@ -72,14 +73,15 @@ Reproduction number: $R_0=\frac{\beta}{\mu+\gamma}$
 
 \slide[Terminology: ODEs vs PDEs]{
 \itmz{
-\item Ordinary differential equation (ODE) \student{\hfill (covered in this course)}
+\item Ordinary differential equation (ODE) \student{\hfill (covered in this course)}\vfill
 \student{\subitem{A DE with derivatives w.r.t. only one independent variable. \vfill\item $\dd{y}{t} = y(t) + 3 \qquad \text{or} \qquad \dd{y}{t} = \sin(y) + \cos(t) $ }}\vfill
 \item Partial differential equation (PDE) \student{\hfill (not covered in this course)}
-\student{\subitem{A DE with derivatives w.r.t multiple independent variable. \vfill
+\student{\vfill\subitem{A DE with derivatives w.r.t multiple independent variables. \vfill
 \item Heat/Diffusion eq: $\pd{u}{t} = D\pdn{u}{x}{2}$\vfill
 \item Wave eq: $\pdn{u}{t}{2} = c \pdn{u}{x}{2}$\vfill
-\item Partial derivatives are necessary for solutions to agree when changing coordinate systems (e.g., switch from cartesian to polar coordinates)
-}}
+}
+ Partial derivatives are necessary for solutions to agree when changing coordinate systems (e.g., switch from cartesian to polar coordinates)
+}
 }
 }
 
@@ -102,7 +104,7 @@ Everything that depends on the unknown function goes on one side of the equal si
 }
 \vfill
 
-The operator $\op{\cdot}$, encodes the "intrinsic" dynamics that the ODE is modelling.  \student{\subitem{Force-displacement relationship of a spring. \item Velocity-drag relationship of a viscous fluid.}}
+The operator $\op{\cdot}$ encodes the "intrinsic" dynamics that the ODE is modelling.  \student{\subitem{Force-displacement relationship of a spring. \item Velocity-drag relationship of a viscous fluid.}}
 
 }
 
@@ -110,23 +112,37 @@ The operator $\op{\cdot}$, encodes the "intrinsic" dynamics that the ODE is mode
 If the operator $\op{\cdot}$ is linear, then the DE is linear.
 \vfill
 \uline{Conditions for linearity:}\vfill
-Given any two functions $f$ and $g$ and a constant $c$, a linear operator satisfies
-
+Given any two functions $f$ and $g$ and a constant $c$,  $\op{\cdot}$ is linear if
+\vfill
 \enum{
 \item\student{ $\op{f+g}=\op{f}+\op{g}$}\vfill
 \item\student{ $\op{cf}=c\op{f}$}\vfill
 }
-\uline{In practice:} does the operator have any nonlinear functions?\vfill
-\twomini[0.2]{0.5}{0.5}{
-\ex{$\op{y}=y''+y$}\\~\\
+
+}
+
+
+\slide[Terminology: Linearity of DEs \hfill - \hfill $\op{y(t)} = f(t)$ ]{
+If the operator $\op{\cdot}$ is linear, then the DE is linear.
+\vfill
+
+\uline{In practice:} \\~\\
+
+Does the operator have either of the following:\enum{ \item any nonlinear functions of $y$ (or its derivatives) or \item any products of $y$ and its derivatives}\vfill
+\threemini[0.3]{0.3}{0.3}{.3}{
+\ex{$\op{y}=y''+y$}\\~\\~\\
 \centering
 \student{Linear}
 }{
-\ex{$\op{y}=y'+\sin(y)$}\\~\\
+\ex{$\op{y}=y'+\sin(y'')$}\\~\\~\\
+\centering
+\student{Nonlinear}
+}{
+\ex{$\op{y}=y\p+y\p y$}\\~\\~\\
 \centering
 \student{Nonlinear}
 }
-
+\vfill
 }
 
 \slide[Terminology: Autonomous DEs \hfill - \hfill $\op{y(t)} = f(t)$]{
@@ -159,7 +175,7 @@ y\p+y&=\cancel{-Ce^{-t}}+\cancel{1} + \cancel{  Ce^{-t}}+t-\cancel{1}\\
 }}Here $C$ is an arbitrary constant that can have any value.\vfill
 Any solution with an arbitrary constant is called a \student{\uline{general solution}}
 \vfill
-We can obtain a unique solution by imposing some constaint, a solution with no arbitrary constants is called a \student{\uline{particular solution}}
+We can obtain a unique solution by imposing some constraint, a solution with no arbitrary constants is called a \student{\uline{particular solution}}
  
 \vfill
 }
