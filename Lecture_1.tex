@@ -9,6 +9,8 @@
 \subsection{Overview}
 \slide[MATH 215/255: Elementary Differential Equations]{
 \vfill
+Lecture 1: Differential Equations
+\vfill
 \enum{
 
 \item What are they and why do we solve them?
@@ -26,14 +28,14 @@ A differential equation (DE) is an equation involving an unknown function $y$ an
 }
 }
 \vfill
-DEs specify the rate of change of one quantity (e.g., the position of an object) with respect to another (e.g., time).\vfill
+DEs specify the rate of change of one variable (e.g., the position of an object) with respect to another (e.g., time).\vfill
 
 }
 \slide[Why do we solve/study DEs?]{
 DEs provide an intuitive way to describe many types of interactions (e.g., mechanical, biochemical, social, economic, etc.).\vfill
 Solving and analyzing DEs allows us to:
 \vfill
-\enum{\item Make predictions about the future (forecasting). \vfill \subitem{Will some quantity grow unboundedly? Oscillate? Decay to zero? \vfill \item With what rate will those things happen? } \vfill \item Test possible mechanisms that may explain experimental data. \vfill \subitem{Why does some quantity sometimes oscillate vs reach an equilibrium? }}
+\enum{\item Make predictions about the future (forecasting). \vfill \subitem{Will some variable grow unboundedly? Oscillate? Decay to zero? \vfill \item With what rate will those things happen? } \vfill \item Test  mechanisms that may explain experimental data. \vfill \subitem{e.g., determine why a variable sometimes oscillates vs. equilibrates? }}
 }
 
 \slide[Example: Skydiving \hfill\begin{minipage}{0.25\textwidth}{ \includegraphics[height=1cm]{images/airplane.pdf}}\end{minipage} ]{
@@ -98,8 +100,8 @@ The highest derivative that appears in the DE.\vfill
 
 \slide[Terminology: Operator Form  \hfill $\Rightarrow$ \hfill $\op{y(t)} = f(t)$]{\vspace{-0.5em}
 Everything that depends on the unknown function goes on one side of the equal sign and everything else on the other.\vfill
-\subitem{ $\dd{y}{t} = y(t) + 3 \quad \to \quad \student{\dd{y}{t} - y(t) = 3}$ \vfill \student{\subitem{$\op{y}=y\p-y, \quad f(t) = 3$}}\vfill
-\item  $\dd{y}{t} =\sin(y) + \cos(t) \quad \to \quad \student{\dd{y}{t} - \sin(y) = \cos(t)}$ \vfill \student{\subitem{$\op{y}=y\p-\sin(y), \quad f(t) = \cos(t)$}\vfill}
+\subitem{ $\dd{y}{t} = y(t) + 3 \quad \to \quad \student{\dd{y}{t} - y(t) = 3}$ \vfill \student{\subitem{$\op{y}=f\p-y, \quad f(t) = 3$}}\vfill
+\item  $\dd{y}{t} =\sin(y) + \cos(t) \quad \to \quad \student{\dd{y}{t} - \sin(y) = \cos(t)}$ \vfill \student{\subitem{$\op{y}=f\p-\sin(y), \quad f(t) = \cos(t)$}\vfill}
 }
 \vfill
 
