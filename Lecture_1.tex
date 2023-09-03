@@ -20,14 +20,20 @@
 \slide[What is a Differential Equation?]{\vspace{-.5em}
 A differential equation (DE) is an equation involving an unknown function $y$ and atleast one derivative of $y$ w.r.t. an independent variable.
 \vfill
-\twomini[.8]{.02}{.98}{\hspace{.15cm}}{\itmz{
+\twomini[.45]{.02}{.98}{\hspace{.15cm}}{\itmz{
 \item [Given:]  A DE with an unknown function $y(t)$. \hfill  \student{e.x., $\carray{\dd{y}{t} = - 3 y(t) \\ \text{\uline{or}} \\ \\y\p = -3y}$}
 \item[Task:]  Find the function(s) $y(t)$.\hfill  \student{Solution: $y(t)=C_1e^{-3t}$}
+}
+}
 \vfill
-\item[Tools:]
-\itmz{\item Calculus (i.e., integration/differentiation) \item Guess and check (does some function $f(t)$ make LHS=RHS?) \item Specialized procedures (informed by experience geussing) \item Geometry/Linear Algebra (useful for systems of DEs)}
+DEs specify the rate of change of one quantity (e.g., the position of an object) with respect to another (e.g., time).\vfill
+
 }
-}
+\slide[Why do we solve/study DEs?]{
+DEs provide an intuitive way to describe many types of interactions (e.g., mechanical, biochemical, social, economic, etc.).\vfill
+Solving and analyzing DEs allows us to:
+\vfill
+\enum{\item Make predictions about the future (forecasting). \vfill \subitem{Will some quantity grow unboundedly? Oscillate? Decay to zero? \vfill \item With what rate will those things happen? } \vfill \item Test possible mechanisms that may explain experimental data. \vfill \subitem{Why does some quantity sometimes oscillate vs reach an equilibrium? }}
 }
 
 \slide[Example: Skydiving \hfill\begin{minipage}{0.25\textwidth}{ \includegraphics[height=1cm]{images/airplane.pdf}}\end{minipage} ]{
@@ -44,28 +50,21 @@ a&=v'
 }
 }
 
-\slide[Example: Epidemiology]{
-Kermack \& McKendrick's SIR model\subitem{
-\uline{S}usceptible $\rightarrow$ \uline{I}nfected $\rightarrow$ \uline{R}ecovered}
+\slide[Example: Ecology \hfill - \hfill Lotka-Volterra Model]{\vspace{-0.75em}
+ Predator-Prey Model, 2 variables:\vfill $x=$ prey population and $y=$ predator population\vfill
+\[\dd{x}{t} = \alpha x - \beta x y,\qquad \dd{y}{t} = \delta xy - \gamma y\]
 \vfill
-System of 3 ordinary differential equations:
-\twomini[.4]{.65}{.33}{
-\algn{
-\dd{S}{t} & = \mu (I+R)  - \beta SI \\
-\dd{I}{t} &= \beta SI - \gamma  I - \mu I\\
- \dd{R}{t} &= \gamma I - \mu R
-}
+We can prove that only two possible solutions exist\vfill
+\twomini[.5]{.5}{.5}{
+\centering
+Mutual Extinction \vfill
+\includegraphics[width=.9\columnwidth]{images/LV_death.pdf}
 }{
-\algn{
-t & = \text{time}\\
-\beta & =\text{infection rate}\\
-\gamma &=\text{recovery rate}\\
-\mu &= \text{birth/death rate}
+\centering
+Predator-Prey  Oscillations \vfill
+\includegraphics[width=.9\columnwidth]{images/LV_oscillations.pdf}
 }
-}
-\vfill
-Reproduction number: $R_0=\frac{\beta}{\mu+\gamma}$
-\enum{\item $R_0>1$: endemic equilibrium \item $R_0<1$: disease dies out \hfill - \hfill basic idea behind "flatten the curve"}
+
 }
 
 \subsection{Terminology}
@@ -87,14 +86,14 @@ Reproduction number: $R_0=\frac{\beta}{\mu+\gamma}$
 
 
 \slide[Terminology: Order of a DE]{
-The highest derivative that appears in the DE.
+The highest derivative that appears in the DE.\vfill
 \itmz{
-\item $y\p=y+3$ \hspace{2em} \student{first order}
-\item  $y\p=y^2+9$  \hspace{2em} \student{first order}
-\item  $\left(\dd{y}{t}\right)^2=\tan(t)$  \hspace{2em} \student{first order}
-\item  $y\pp=-y$  \hspace{2em} \student{second order}
-\item  $\ddn{y}{x}{4}=ky$  \hspace{2em} \student{fourth order}
-}
+\item $y\p=y+3$ \hspace{2em} \student{first order}\vfill
+\item  $y\p=y^2+9$  \hspace{2em} \student{first order}\vfill
+\item  $\left(\dd{y}{t}\right)^2=\tan(t)$  \hspace{2em} \student{first order}\vfill
+\item  $y\pp=-y$  \hspace{2em} \student{second order}\vfill
+\item  $\ddn{y}{x}{4}=ky$  \hspace{2em} \student{fourth order}\vfill
+}\vfill
 }
 
 \slide[Terminology: Operator Form  \hfill $\Rightarrow$ \hfill $\op{y(t)} = f(t)$]{\vspace{-0.5em}
@@ -199,5 +198,21 @@ y(0) &= C-1 = 0 \quad \Rightarrow C=1\\
 \item Initial Value Problems  \subitem{ The most "standard" way to obtain a unique solution \item Specify solution value at some initial time}
 }
 
+}
+
+
+\slide[For next class...you will need access to MATLAB]{
+\vfill
+\enum{
+\item Create a MathWorks account
+\subitem{Go to \href{https://matlab.mathworks.com}{matlab.mathworks.com}
+\item Click "No account? Create one!"
+\item Enter your UBC email address and follow the instructions
+\subitem{You can obtain one from  \uline{\href{https://www.myaccount.ubc.ca/myAccount/}{here}} using "Activate Student Email"}
+\item Note it may take a few hours to activate your MathWorks account}\vfill
+\item Use MATLAB Online
+\subitem{Go to  \href{https://matlab.mathworks.com}{matlab.mathworks.com}
+\item Sign in with your UBC email address and MathWorks password}
+}\vfill
 }
 \end{document}
