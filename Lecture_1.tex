@@ -3,6 +3,8 @@
 
 \iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
 
+\usepackage{empheq}
+
 \settoggle{covered}{true}
 \begin{document}
 \section{Introduction}
@@ -24,7 +26,7 @@ A differential equation (DE) is an equation involving an unknown function $y$ an
 \vfill
 \twomini[.45]{.02}{.98}{\hspace{.15cm}}{\itmz{
 \item [Given:]  A DE with an unknown function $y(t)$. \hfill  \student{e.x., $\carray{\dd{y}{t} = - 3 y(t) \\ \text{\uline{or}} \\ \\y\p = -3y}$}
-\item[Task:]  Find the function(s) $y(t)$.\hfill  \student{Solution: $y(t)=C_1e^{-3t}$}
+\item[Task:]  Find the function(s) $y(t)$.\hfill  \student{Solution: $y(t)=Ce^{-3t}$}
 }
 }
 \vfill
@@ -38,24 +40,35 @@ Solving and analyzing DEs allows us to:
 \enum{\item Make predictions about the future (forecasting). \vfill \subitem{Will some variable grow unboundedly? Oscillate? Decay to zero? \vfill \item With what rate will those things happen? } \vfill \item Test  mechanisms that may explain experimental data. \vfill \subitem{e.g., determine why a variable sometimes oscillates vs. equilibrates? }}
 }
 
-\slide[Example: Skydiving \hfill\begin{minipage}{0.25\textwidth}{ \includegraphics[height=1cm]{images/airplane.pdf}}\end{minipage} ]{
+\slide[Example: Skydiving \hfill\begin{minipage}{0.25\textwidth}{ \includegraphics[height=1cm]{images/airplane.pdf}}\end{minipage} ]{\vspace{-1em}
 \begin{center}
-\includegraphics[height=2cm]{images/skydiver_solo.pdf}
-\end{center}
-Newton's Second Law:\[F=ma\]
+\includegraphics[height=1.5cm]{images/skydiver_solo.pdf}
+\end{center}\vspace{-1.5em}
+Newton's Second Law:\[F=ma\]\vspace{-2em}
 \student{\algn{
-ma &= \underbrace{-mg}_{\text{gravitational force}} \hspace{2em} \underbrace{-\mu v}_{\text{drag force}}\\\\
-a&=v'
-}\vfill
-\[ \boxed{mv' = -mg - \mu v} \qquad \text{DE for } v(t) \]
-\vfill
+ma &= \underbrace{-mg}_{\text{gravitational force}} \hspace{2em} \underbrace{-\mu v}_{\text{drag force}}
+}} Rewrite as: \vfill
+\threemini[.3]{.3}{.3}{.3}{
+\small{1$^{\text{st}}$ order linear ODE}
+\student{\algn{a&=v\p\\ \Aboxed{ mv\p&=-mg-\mu v}}}
+}{
+\small{2$^{\text{nd}}$ order linear ODE}
+\student{\algn{a&=x\pp, \quad v=x\p\\ \Aboxed{mx\pp&=-mg-\mu x\p}}}
+}{
+\small{1$^{\text{st}}$ order linear system}
+\student{
+\begin{empheq}[box=\fbox]{align*}
+x\p&=v\\ mv\p&=-mg-\mu v
+\end{empheq}
 }
+}\vfill
+We will learn different methods to solve these three different DEs.
 }
 
 \slide[Example: Ecology \hfill - \hfill Lotka-Volterra Model]{\vspace{-0.75em}
- Predator-Prey Model, 2 variables:\vfill $x=$ prey population and $y=$ predator population\vfill
-\[\dd{x}{t} = \alpha x - \beta x y,\qquad \dd{y}{t} = \delta xy - \gamma y\]
-\vfill
+ Predator-Prey Model, 2 variables:\vfill $x=$ prey population and $y=$ predator population
+\[\dd{x}{t} = \alpha x - \beta x y,\qquad \dd{y}{t} = \delta xy - \gamma y \quad  \student{\text{1$^{\text{st}}$ order nonlinear system}}\]
+
 We can prove that only these two solutions types are possible\vfill
 \twomini[.5]{.5}{.5}{
 \centering
@@ -78,8 +91,8 @@ Predator-Prey  Oscillations \vfill
 \student{\subitem{A DE with derivatives w.r.t. only one independent variable. \vfill\item $\dd{y}{t} = y(t) + 3 \qquad \text{or} \qquad \dd{y}{t} = \sin(y) + \cos(t) $ }}\vfill
 \item Partial differential equation (PDE) \student{\hfill (not covered in this course)}
 \student{\vfill\subitem{A DE with derivatives w.r.t multiple independent variables. \vfill
-\item Heat/Diffusion eq: $\pd{u}{t} = D\pdn{u}{x}{2}$\vfill
-\item Wave eq: $\pdn{u}{t}{2} = c \pdn{u}{x}{2}$\vfill
+\item \ex{Temperature of a metal rod} \\~\\ Heat/Diffusion eq: $\pd{u}{t} = D\pdn{u}{x}{2}$ \hfill - \hfill 2$^{\text{nd}}$ order linear PDE\vfill
+
 }
  Partial derivatives are necessary for solutions to agree when changing coordinate systems (e.g., switch from cartesian to polar coordinates)
 }
@@ -105,7 +118,15 @@ Everything that depends on the unknown function goes on one side of the equal si
 }
 \vfill
 
-The operator $\op{\cdot}$ encodes the "intrinsic" dynamics that the ODE is modelling.  \student{\subitem{Force-displacement relationship of a spring. \item Velocity-drag relationship of a viscous fluid.}}
+
+}
+
+\slide[Terminology: Operator Form  \hfill $\Rightarrow$ \hfill $\op{y(t)} = f(t)$]{\vspace{-0.5em}
+
+The operator $\op{\cdot}$ encodes the "intrinsic" dynamics that the ODE is modelling.  \student{\subitem{Force-displacement relationship of a spring. \item Velocity-drag relationship of a viscous fluid.}}\vfill
+\student{In many physics-based applications, $\op{\cdot}$ does not depend explicitly on the independent variable $t$.}
+\vfill
+$f(t)$ is often called the (external) forcing term.\\~\\ \student{It typically accounts for external influences that could be varied or turned off.}
 
 }
 
@@ -145,7 +166,7 @@ Does the operator have either of the following:\enum{ \item any nonlinear functi
 }
 \vfill
 }
-
+\begin{comment}
 \slide[Terminology: Autonomous DEs \hfill - \hfill $\op{y(t)} = f(t)$]{
 If both $\op{\cdot}$ and $f(t)$ do not explicitly depend on the independent variable, then the DE is autonomous. \vfill 
 
@@ -166,6 +187,7 @@ $f(t)$ is often called the (external) forcing term. \vfill \student{ constant or
 \item $\ddn{x}{t}{4} = 0$ \subitem{Order: \student{4} \item Linear: \student{Yes} \item Autnomous: \student{Yes}}
 }
 }
+\end{comment}
 \slide[Terminology: Solution to an ODE]{
 A solution of an ODE is a function that satisifes the ODE.\vfill
 \ex{Is $y=Ce^{-t}+t-1$ a solution to $y\p+y=t$?}
