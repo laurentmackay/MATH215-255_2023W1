@@ -39,7 +39,7 @@ Solving and analyzing DEs allows us to:
 \enum{\item Make predictions about the future (forecasting). \vfill \subitem{Will some variable grow unboundedly? Oscillate? Decay to zero? \vfill \item With what rate will those things happen? } \vfill \item Test  mechanisms that may explain experimental data. \vfill \subitem{e.g., determine why a variable sometimes oscillates vs. equilibrates? }}
 }
 
-\slide[Example: Skydiving \hfill\begin{minipage}{0.25\textwidth}{ \includegraphics[height=1cm]{images/airplane.pdf}}\end{minipage} ]{\vspace{-1em}
+\slide[Example: Skydiving \hspace{2em}\begin{minipage}{0.25\textwidth}{ \includegraphics[height=1cm]{images/airplane.pdf}}\end{minipage} ]{\vspace{-2em}
 \begin{center}
 \includegraphics[height=1.5cm]{images/skydiver_solo.pdf}
 \end{center}\vspace{-1.5em}
@@ -49,10 +49,10 @@ ma &= \underbrace{-mg}_{\text{gravitational force}} \hspace{2em} \underbrace{-\m
 }} Rewrite as: \vfill
 \threemini[.3]{.3}{.3}{.3}{
 \small{1$^{\text{st}}$ order linear ODE}
-\student{\algn{a&=v\p\\ \Aboxed{ mv\p&=-mg-\mu v}}}
+\student{\algn{\text{sub. }a&=v\p\\ \Aboxed{ mv\p&=-mg-\mu v}}}
 }{
 \small{2$^{\text{nd}}$ order linear ODE}
-\student{\algn{a&=x\pp, \quad v=x\p\\ \Aboxed{mx\pp&=-mg-\mu x\p}}}
+\student{\algn{\text{sub. }a&=x\pp, \quad v=x\p\\ \Aboxed{mx\pp&=-mg-\mu x\p}}}
 }{
 \small{1$^{\text{st}}$ order linear system}
 \student{
@@ -93,8 +93,8 @@ Predator-Prey  Oscillations \vfill
 \item \ex{Temperature of a metal rod, given by $u(x,t)$.} \\~\\ Heat/Diffusion eq: $\pd{u}{t} = D\pdn{u}{x}{2}$ \hfill - \hfill 2$^{\text{nd}}$ order linear PDE\vfill
 
 }
- Partial derivatives are necessary for solutions to agree when changing coordinate systems (e.g., switch from cartesian to polar coordinates)
 }
+\student{ Partial derivatives are necessary for solutions to agree when changing coordinate systems (e.g., switch from cartesian to polar coordinates)}
 }
 }
 
