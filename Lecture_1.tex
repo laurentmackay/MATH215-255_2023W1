@@ -5,8 +5,10 @@
 
 \usepackage{empheq}
 
+
 \begin{document}
-\section{Introduction}
+
+\section{Introduction to DEs}
 \subsection{Overview}
 \slide[MATH 215/255: Elementary Differential Equations]{
 \vfill
@@ -45,7 +47,7 @@ Solving and analyzing DEs allows us to:
 \end{center}\vspace{-1.5em}
 Newton's Second Law:\[F=ma\]\vspace{-2em}
 \student{\algn{
-ma &= \underbrace{-mg}_{\text{gravitational force}} \hspace{2em} \underbrace{-\mu v}_{\text{drag force}}
+ma(t) &= \underbrace{-mg}_{\text{gravitational force}} \hspace{2em} \underbrace{-\mu v(t)}_{\text{drag force}}
 }}
 
 \vspace{-1.25em} Rewrite as: 
@@ -115,8 +117,8 @@ The highest derivative that appears in the DE.\vfill
 
 \slide[Terminology: Operator Form  \hfill $\Rightarrow$ \hfill $\op{y(t)} = f(t)$]{\vspace{-0.5em}
 Everything that depends on the unknown function goes on one side of the equal sign and everything else on the other.\vfill
-\subitem{ $\dd{y}{t} = y(t) + 3 \quad \to \quad \student{\dd{y}{t} - y(t) = 3}$ \vfill \student{\subitem{$\op{y}=f\p-y, \quad f(t) = 3$}}\vfill
-\item  $\dd{y}{t} =\sin(y) + \cos(t) \quad \to \quad \student{\dd{y}{t} - \sin(y) = \cos(t)}$ \vfill \student{\subitem{$\op{y}=f\p-\sin(y), \quad f(t) = \cos(t)$}\vfill}
+\subitem{ $\dd{y}{t} = y(t) + 3 \quad \to \quad \student{\dd{y}{t} - y(t) = 3}$ \vfill \student{\subitem{$\op{y}=y\p-y, \quad f(t) = 3$}}\vfill
+\item  $\dd{y}{t} =\sin(y) + \cos(t) \quad \to \quad \student{\dd{y}{t} - \sin(y) = \cos(t)}$ \vfill \student{\subitem{$\op{y}=y\p-\sin(y), \quad f(t) = \cos(t)$}\vfill}
 }
 \vfill
 
@@ -230,18 +232,4 @@ y(0) &= C-1 =  4 \quad \Rightarrow C=5\\
 }
 
 
-\slide[For next class...you will need access to MATLAB]{
-\vfill
-\enum{
-\item Create a MathWorks account
-\subitem{Go to \href{https://matlab.mathworks.com}{matlab.mathworks.com}
-\item Click "No account? Create one!"
-\item Enter your UBC email address and follow the instructions
-\subitem{You can obtain one from  \uline{\href{https://www.myaccount.ubc.ca/myAccount/}{here}} using "Activate Student Email"}
-\item Note it may take a few hours to activate your MathWorks account}\vfill
-\item Use MATLAB Online
-\subitem{Go to  \href{https://matlab.mathworks.com}{matlab.mathworks.com}
-\item Sign in with your UBC email address and MathWorks password}
-}\vfill
-}
 \end{document}
