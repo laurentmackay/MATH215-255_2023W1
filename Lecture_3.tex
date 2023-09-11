@@ -44,7 +44,7 @@ Today we will build intuition around how to find approximate solutions.
 \student{
 \vspace{.5em}
 \algn{f(y,t) &= \text{slope of y(t) in the $(t,y)$-plane.}\\
-&=\frac{\Delta y}{\Delta t}}
+&\approx\frac{\Delta y}{\Delta t}}
 
 
 
@@ -209,8 +209,11 @@ Why does the solution not exist for $x<-\sqrt[3]{\nicefrac32}$? \vfill
 \subsection{Existence and uniqueness}
 
 \slide[Picard's Theorem]{
-A solution to \[y'=f(t,y),\quad \text{with } y(t_0)=y_0\] 
-for t  in some interval around $t_0$ if $f(t,y)$ is continuous (as a function of two variables) and $\nicefrac{\partial f}{\partial y}$ exists and is continuous near $(t_0,y_0)$.
+A \uline{unique} solution to
+\vfill
+ \[y'=f(t,y),\quad \text{with } y(t_0)=y_0\] 
+\vfill
+exists for t near $t_0$ if\vfill \enum{ \item $f(t,y)$ is continuous (as a function of two variables) and \item $\nicefrac{\partial f}{\partial y}$ exists and is continuous near $(t_0,y_0)$.}
 
 \vfill
 
@@ -222,7 +225,7 @@ Analytically, we find 2 solutions
 \enum{\item By inspection: \[y(t)=0\] \item Integrate for positive and negative $y$ separately: \[y(t)=\begin{cases}  t^2 & t\geq0 \\ -t^2 & t<0 \end{cases}\] }
 }{\includegraphics[width=.95\columnwidth]{images/1-3-sqrt-sol-mbx.pdf}}
 \vfill
-\student{Picard's uniqueness theorem does not apply, because $\pd{f}{y}2\sqrt{|y|}$ does not exist at $y=0$.}
+\student{Picard's uniqueness theorem does not apply, because $\pd{}{y}2\sqrt{|y|}$ does not exist at $y=0$.}
 }
 
 \end{document}
