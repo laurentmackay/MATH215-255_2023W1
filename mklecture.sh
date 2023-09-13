@@ -27,6 +27,7 @@ rm *.toc
 rm *.snm
 rm *.out
 rm *.notes
+rm *.vrb
 rm *.synctex*
 rm $1_presentation.tex
 rm $1_skeleton.tex

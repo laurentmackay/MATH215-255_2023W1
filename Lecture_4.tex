@@ -1,0 +1,118 @@
+\input{notes.tex}
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+\begin{document}
+
+
+\section{Lecture 4}
+
+\subsection{Introduction}
+\slide[Recall]{
+We saw how to solve ODEs of the form \[y\p=f(t)\cdot g(y) \qquad -\qquad \text{Separable Equations}\]
+
+\student{\[\frac{dy}{g(y)}  = f(t)dt \dots \text{integrate and isolate $y$} \]}\vfill
+Now we want to solve something a little more general...
+\[y\p =f(t) \cdot g(y) + h(t)\]
+\student{
+This is not separable :(
+
+\vfill
+\uline{Simple Case:}
+\subitem{linear equations with $g(y)=y$}
+}
+}
+
+
+
+\slide{
+\ex{Solve $y\p+2ty=t^2e^{t}$}\\
+\student{First we do something very odd, multiply everything by $e^{t^2}$
+\algn{ e^{t^2}y\p + \underbrace{2te^{t^2}}_{\small \dd{}{t}e^{t^2}}y &= t^2e^{t^3} &\rightarrow
+ \underbrace{e^{t^2}\dd{}{t}y+\dd{}{t}e^{t^2}y}_{\text{product rule applied to } e^{t^2}y} &=t^2 e^{t^3} \\\\
+\dd{}{t}\paren{e^{t^2}y} &= t^2e^{t^3} & \int d\paren{e^{t^2}y} &=  \int t^2e^{t^3} dt\\\\
+e^{t^2}y &= \frac13 \int e^{u} du & \carray{u = t^3 \\ du = 3t^2}\\
+e^{t^2}y & = \frac13 e^{u} + C \\&= \frac13 e^{t^3} +C & y(t) &= \frac13 e^t +Ce^{-t^2}
+}
+}
+
+}
+
+\subsection{Method of integrating factors}
+\slide[Method of integrating factors: $y\p+p(t)y=h(t) $ ]{
+\enum{
+\item Multiply by the integrating factor $\mu(t)=e^{\intop p(t)\text{d}t  }$ \student{\algn{\mu(t)y\p +\underbrace{p(t)\mu(t)}_{\mu\p(t)}y &= h(t)\mu(t) \\
+\dd{}{t}(\mu \cdot y) &= h(t)\mu(t)\\
+\text{d}(\mu \cdot y) &= h(t)\mu(t)\text{d}t
+}}
+\item Integrate: \student{\[\mu \cdot y = \intop h(t)\mu(t)\text{d}t + C \]}
+
+\item Isolate $y(t)$: \student{\[ y(t) = \frac{\intop h(t)\mu(t)\text{d}t + C}{\mu(t)} \]}}
+}
+
+
+
+\slide{\ex{Find the general solution of $y\p-3y=e^t$.} \hfill $\boxed {\rarray{ y(t) = \frac{\intop h(t)\mu(t)\text{d}t + C}{\mu(t)} \\ \mu(t)=e^{\intop p(t)\text{d}t }}}$
+
+\student{\algn{\mu(t)&=e^{\intop(-3)dt}=e^{-3t}\\
+e^{-3t}y\p-3e^{-3t}y&=e^t e^{-3t}\\
+\dd{}{t}\left( e^{-3t}y \right ) &=e^{-2t}\\
+\text{d}\left( e^{-3t}y \right ) &=e^{-2t}\text{d}t\\
+e^{-3t}y(t)  &= \intop e^{-2t}\text{d}t+C\\
+y(t) &= \frac{ -\frac12 e^{-2t}+C}{e^{-3t}}\\
+&=-\frac12e^t+Ce^{3t}
+}
+}
+
+}
+
+\slide{\ex{Find the general solution of $y\p-3t^2y=3t^2$.}  \hfill $\boxed {\rarray{ y(t) = \frac{\intop h(t)\mu(t)\text{d}t + C}{\mu(t)} \\ \mu(t)=e^{\intop p(t)\text{d}t }}}$
+\vfill\student{\algn{\mu(t)&=e^{-\intop3t^2dt}=e^{-t^3} &                                                                                    & \carray{\text{let }u=t^3\\du=3t^2}\\
+e^{-t^3}y(t)  &= \intop3t^2e^{-t^3}\text{d}t&                                                          \intop 3t^2e^{-t^3}\text{d}t & = \intop e^{-u} du\\
+                       &                                                                                                                                                             &   & = -e^{-u}+C\\
+e^{-t^3}y(t) &= -e^{-t^3}+C\\
+y(t)&=-1+Ce^{t^3}
+}
+}
+}
+
+
+\slide[]{\ex{$ty'+5y=24t^3$, with $y(1)=2$}
+\student{\vfill
+\algn{y'+\frac{5y}{t} &=24t^2&\mu(t)&=e^{\intop \frac{5}{t} dt}=e^{5 \ln(t) }\\&&&=\left(e^{\ln(t)}\right)^5=t^5\\
+t^5y(t)&=\intop 24t^7 dt = 3t^8+C\\\\
+y(t)&=3t^3+Ct^{-5}\\
+y(1)&=2=3+C &C=-1
+}\vfill \[\boxed{y(t)=3t^3-t^{-5}}\]
+}
+}
+
+\slide[Application: Mixing Tank 
+\hspace{2em}  ]{
+At time $t=0$ a tank contains 10 kg of salt dissolved in 200 liters of water. Water containing $\frac{1}{2}$kg of salt per liter enters the tank at a rate of 2 L/min and the well mixed solution leaves the tank at the same rate.\vfill
+
+\enum{\item[(a)] Let $Q(t)$ be the amount of salt in kilograms in the solution after $t$ minutes have passed. Find a formula for the rate of change in the amount of salt, $\frac{dQ}{dt}$, in terms of the amount of salt in the solution, $Q(t)$. \vfill   
+\twomini[.3]{.25}{.75}{
+ \includegraphics[height=2.8cm]{images/mixing_tank.pdf}
+}{
+\student{\algn{\dd{Q}{t} &= \text{in} - \text{out} =0.5 \frac{kg}{L}\times 2\frac{L}{min} - \frac{Q\;kg}{200 L} \times 2\frac{L}{min} \\&=1-\frac{Q}{100} }}}
+ \vfill
+  \item[(b)] Find $Q(t)$. \hfill\student{  $\carray{\mu(t)=e^{\nicefrac{t}{100}}\\  Q(0)=10 } \quad \Rightarrow \quad Q(t)=100-90 e^{-\nicefrac{t}{100}}$}  }
+
+}
+
+\subsection{Summary}
+\slide[Summary]{
+\itmz{
+\item General linear 1st order ODE: $y\p +p(t)y=h(t)$\vfill
+\itmz{
+\item To solve,  turn the LHS into an exact derivative: $$y\p +p(t)y \quad \rightarrow \quad \text{d}(\mu\cdot y ) = \mu\p y +\mu y\p$$
+\subitem{ Multiply by an integrating factor $\mu(t)=e^{\intop p(t)\text{d}t} $
+\item General solution: $ y(t) = \frac{\intop g(t)\mu(t)\text{d}t + C}{\mu(t)}$}
+}\vfill
+\item This method solves \uline{all} linear 1st order ODEs, provided that $p(t)$ and $h(t)$ are continuous.
+}
+}
+
+\end{document}
+
