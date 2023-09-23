@@ -1,0 +1,112 @@
+\input{notes.tex}
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+\begin{document}
+
+
+\section{Lecture 6}
+\subsection{Introduction}
+\settoggle{covered}{true}
+\slide[Recall: We previsouly saw...]{\vspace{-1.25em}
+\enum{
+\item General linear 1st order ODE: $y\p +p(t)y=h(t)$\vfill
+\itmz{
+\item To solve, multiply by $\mu(t)$  turn the LHS into a total derivative: $$y\p +p(t)y \quad \rightarrow \quad \dd{}{t}(\mu\cdot y ) = \mu y\p  + \mu\p y$$
+}
+\item Total derivative of the function of two variables $\Phi(x,y)$
+\algn{\dd{}{x} \Phi(x,y) &=\Phi_x+\Phi_y \dd{y}{x}=0 \intertext{or equivalently}
+&M(x,y) + N(x,y) \dd{y}{x}=0 &\text{with } M_y=N_x
+}
+}\vfill
+
+\student{What can we do if $M_y \neq N_x$? \vfill \centering Idea: multiply by an integrating factor u(x,y)}
+}
+
+\subsection{Integrating Factors for Exact Equations}
+
+\slide[General Idea]{\vspace{-1em}
+Suppose we have \[M(x,y) + N(x,y) \dd{y}{x}=0 \qquad \text{with } M_y \neq N_x,\] we want to multiply the whole equation by $u(x,y)$.
+\vfill
+Goal:\vspace{-1em}
+\algn{(uM)_y&=(uN)_x\\
+\student{u_yM + uM_y} &\student{ = u_xN+uN_x }& \student{\text{This is a PDE for $u(x,y)$}}}
+\vfill
+\student{
+PDEs are outside the scope of this course.
+\vfill
+We restrict ourselves to two cases:
+
+\centering \enum{\item $u=u(x)$ \item $u=u(y)$}
+}
+}
+
+\slide{
+\ex{Solve $\;\; (1-x-y^2)+2y\dd{y}{x}=0$}
+\student{
+Not separable, not linear\[M_y=-2y,\quad N_x=0\neq M_y \qquad\text{not exact}\]
+Try $u=u(y)$
+\algn{(uM)_y&=(uN)_x\\
+u_yM + uM_y&=\cancelto{0}{u_x}N+u\cancelto{0}{N_x}\\
+u'(y)(1-2x-y^2)-u(y)2y& =0 &\text{Not solvable (x-dependence)} }
+\vfill
+Try $u=u(x)$
+\algn{(uM)_y&=(uN)_x\\
+\cancelto{0}{u_y}M + uM_y&= u_xN+u\cancelto{0}{N_x} \\
+-u(x)\cancel{2y}& = u'(x)\cancel{2y} &u'=-u\\
+u(x)&=Ce^{-x}&\text{arbitrarily choose $C=1$}}
+}
+
+}
+
+\settoggle{covered}{false}
+
+\slide{
+\ex{Solve $\;\; (1-x-y^2)e^{-x}+2ye^{-x}\dd{y}{x}=0$}
+\student{We know this DE is exact!\algn{\Phi(x,y) &= \intop M(x,y) dx + h(y)\\
+&= \intop (1-x-y^2)e^{-x} dx + h(y)\\
+&=\underbrace{  (1-y^2) \intop e^{-x} dx}_{(y^2-1)e^{-x}} - \underbrace{\intop x e^{-x} dx}_{I(x)}+ h(y)\\
+I(x)&=\intop x e^{-x} dx \qquad\qquad\qquad  \text{let }\larray{u=x,\; du=dx\\dv=e^{-x}dx,\; v=-e^{-x}}\\
+& = uv - \intop v du  = xe^{-x} + \intop e^{-x}dx =  (x -1) e^{-x}\\
+\Phi(x,y) &= (y^2+x)e^{-x}+h(y)\\
+\Phi_y &= 2ye^{-x} +h'(y) =2ye^{-x} \qquad \Rightarrow h'=0 \Rightarrow h= C \\
+\Phi(x,y) &=  (y^2+x)e^{-x} + C  \qquad\qquad \text{Solution: }\Aboxed{ (y^2+x)e^{-x} =C }}
+}
+}
+\slide[]{\ex{Find the integrating factor for $2x+(x^2+2e^y)\dd{y}{x}$}
+
+\student{
+\[M=2x,\quad N=x^2+2e^y, \qquad \text{with } M_y=0\neq N_x=2x\]
+Not exact, try $u=u(x)$
+\algn{(uM)_y&=(uN)_x\\
+\cancelto{0}{u_y}M + u\cancelto{0}{M_y}&= u_xN+u N_x \\
+0& = u'(x^2+2e^y)+2xu(y)&\text{Not separable, not linear}}\vfill
+Try $u=u(y)$
+\algn{(uM)_y&=(uN)_x\\
+u_yM + u\cancelto{0}{M_y}&=\cancelto{0}{u_x}N+uN_x\\
+u'(y)\cancel{2x}&=u(y)\cancel{2x} &u'=u\\
+\Aboxed{u(y)&=e^y} }
+
+}
+
+}
+
+\slide{\ex{Consider $\Phi(x,y) = x^2y^3+y^2x^3=2.$}
+\enum{\item Find a non-exact DE whose solution is given by expression above.
+\item Find a solution value for $x$ when $y=1$.}
+\student{\enum{\item Start by making an exact DE: $\Phi_x+\Phi_y\dd{y}{x}=0$
+\algn{
+(2xy^3+3y^2x^2)+(3x^2y^2+2yx^3)\dd{y}{x}&=0\intertext{divide by the common factor $xy$}
+(2y^2+3yx)+(3xy+2x^2)\dd{y}{x}&=0\\
+M_y=4y+3x & &N_x=3y+4x \neq M_y
+}
+\item Plug $y=1$ into the expression
+\[x^2+x^3=2\qquad\text{by inspection, we find } x=1\]
+}
+
+}
+
+}
+
+\end{document}
+

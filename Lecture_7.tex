@@ -1,0 +1,269 @@
+\input{notes.tex}
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+\begin{document}
+
+\section{Lecture 7}
+\subsection{Autonomous DEs and Stability of Equilibria}
+
+\slide[Autonomous DEs]{
+\twomini{.6}{.35}{
+A first order autonomous DE can be written as \[\dd{y}{t} = f(y),\]i.e., without any explicit time-dependence.\vfill
+
+\vfill
+For such an autonomous DE, a point $y^*$ is called  a \uline{fixed point}  if 
+\student{\[f(y^*)=0\] \vfill
+Then $y(t)=y^*$ is a constant solution\vfill
+\subitem{an \uline{equilibrium} solution (steady state)}}
+\vspace{2em}
+}{
+\ex{$y'=2-y$}
+\vfill
+\student{$y=2$ is a fixed point}
+\vfill
+\resizebox{4cm}{5cm}{
+\begin{tikzpicture}\hspace{-.5cm}
+\begin{axis}[
+    xmin = -0.5, xmax = 3.5,
+    ymin = -1.5, ymax = 4.5,
+    zmin = 0, zmax = 1,
+    grid style={line width=.1pt},
+    major grid style={line width=.2pt},
+    xtick = {0,1,2,3},
+    ytick = {-1,0,1,2,3,4},
+    axis equal image,
+    view = {0}{90},
+    xlabel={$t$},
+    ylabel={$y$},
+]
+
+
+
+    \addplot3[
+        quiver = {
+            u = {1/sqrt(1+(2-y)^2)},
+            v = {(2-y)/sqrt(1+(2-y)^2)},
+            scale arrows = 0.45,
+                every arrow/.append style={%
+                    line width=.1+\pgfplotspointmetatransformed/1500,
+                    -{Latex[length=0pt 5,width=0pt 3]}
+                }
+        },
+        -stealth,
+        domain = 0:3,
+        domain y = -1.1:4.1,
+        samples=6
+    ] {0};
+
+\end{axis}
+
+\end{tikzpicture}
+}
+\vspace{1.25em}
+}\vspace{-1em}
+\centering
+Solutions to autonomous DEs flow towards/away from fixed points.
+}
+\begin{comment}
+\slide[Example: Newton's Law of Cooling]{
+Let $y(t)$ be the temperature of an object and $A$ be the constant ambient temperature.\vfill
+Newton's law of cooling states that \[ \dd{y}{t} = k \left( y(t)-A \right) \]
+\twomini[.5]{.5}{.45}{
+Separable DE: \\with $y(0)=y_0$ we get \student{\[y(t) = A + (y_0-A)e^{-kt}\] }
+Unique Equilibrium:
+\student{\algn{ k \left( y^*-A \right)=0&\\
+\Rightarrow y^*=A & \quad \text{or} & \lim_{t\to\infty} y(t) = A }}
+}{\vfill
+\includegraphics[width=\columnwidth]{images/2-2-coffee-mbx.pdf}
+}
+}
+\end{comment}
+
+\slide[Example: Logistic Equation]{
+Let $r>0$ be the exponential growth rate of a population with size $y(t)$, and $K>0$ be carrying capacity of its environment.\vfill
+Logistic model of population dynamics: \[ \dd{y}{t} = r y \left( K-y\right) \]
+\twomini[.5]{.5}{.45}{
+Two Equilibria:
+\student{\algn{  r y^* \left( K-y^*\right)&=0\\
+ y^*&=0 &\text{(unstable)}\intertext{and}
+y^*&=K&\text{(stable)}}}
+}{\vfill
+\includegraphics[width=\columnwidth]{images/2-2-logistic-mbx.pdf}
+}
+}
+
+\slide[Asymptotic Stability]{\vspace{-.75em}
+A fixed point $y^*$ is \uline{asymptotically stable}, if there exists some initial condition $y_0 \neq y^*$ such that a solution to
+ \algn{\arr{rl}{\dd{y}{t} &= f(y) \\ \text{with } y(t_0)&=y_0} &\qquad\text{obeys}&\lim_{t\to\infty} |y(t)-y^*|\to0  }  \student{That is, some solutions eventually converge to $y^*$.}\vfill
+\ex{$\dd{y}{t} = r y \left( K-y\right)$}\vfill
+\twomini[.15]{.5}{.5}{
+\uline{$y^*=0$}
+
+\centering 
+\student{only $y_0=0$ converges to $y^*=0$\\$\Rightarrow$ unstable}
+}{
+\uline{$y^*=K$}
+
+\centering 
+\student{All $y_0>0$ converges to $y=K$\\$\Rightarrow$ stable}
+}
+}
+\subsection{Phase Lines}
+\slide[Phase Lines \hfill (review from MATH 100)]{\vspace{-1em}
+For autonomous DEs, there is no horizontal variation in the slopefield.\vspace{.25em} \subitem{We can collapse the (t,y)-plane onto a 1D phase line.}
+\vspace{.25em} 
+\uline{How to draw a (horizontal) phase line diagram:}
+\enum{
+\item \student{Identify all the fixed points $y^*$ for the DE.}\vfill
+\item \student{For each interval between the $y^*$s as well as $\pm \infty$ evaluate $f(y)$\vfill
+\subitem{Draw a rightward arrow if $f(y)>0$ \vfill \item Draw a leftward arrow if $f(y)<0$  }}
+
+\vfill
+\ex{$y'=y(1-y)$ \hfill\student{(evaluate sign of each term separately)}}
+
+\vfill
+
+\begin{tikzpicture}
+\draw[<->] (-5,0)--(5,0) node[right]{$y$};
+
+
+\student{
+
+\node[isosceles triangle,
+	draw, fill,
+	minimum size =.12mm, inner sep=2pt, rotate=180] (T) at (-4,0){};
+\node at (-4,0.35) {-+};
+
+\xcoord{-3}{0};
+\node at (-3,-.9) {(unstable)};
+
+\node[isosceles triangle,
+	draw, fill,
+	minimum size =.12mm, inner sep=2pt] (T) at (0,0){};
+\node at (0,0.35) {++};
+
+\xcoord{3}{1}
+\node at (3,-.9) {(stable)};
+
+\node[isosceles triangle,
+	draw, fill,
+	minimum size =.12mm, inner sep=2pt, rotate=180] (T) at (4,0){};
+\node at (4,0.35) {+-};
+
+}
+\end{tikzpicture}
+
+}
+
+}
+\slide{
+
+\ex{$y'=y^2(1-y) $ }
+
+\vspace{1em}
+Draw the phase line and classify the stability of the fixed points.
+
+\vfill
+\centering
+
+\begin{tikzpicture}
+\draw[<->] (-5,0)--(5,0) node[right]{$y$};
+
+
+\student{
+
+\node[isosceles triangle,
+	draw, fill,
+	minimum size =.12mm, inner sep=2pt] (T) at (-4,0){};
+\node at (-4,0.35) {-+};
+
+\node[align=center] at (-4.5,-2.5) {stable from \\ the left};
+\draw[->] (-4.5,-2) --(-4,-1.05);
+
+\xcoord{-3}{0};
+\node at (-3,-.9) {(semistable)};
+
+\node[align=center] at (-1,-2.5) {unstable from \\ the right};
+\draw[->] (-1,-2) --(-2,-1.05);
+
+\node[isosceles triangle,
+	draw, fill,
+	minimum size =.12mm, inner sep=2pt] (T) at (0,0){};
+\node at (0,0.35) {++};
+
+\xcoord{3}{1}
+\node at (3,-.9) {(stable)};
+
+\node[isosceles triangle,
+	draw, fill,
+	minimum size =.12mm, inner sep=2pt, rotate=180] (T) at (4,0){};
+\node at (4,0.35) {+-};
+
+}
+
+\end{tikzpicture}
+
+}
+\subsection{Euler's Method}
+\slide[Euler's method  \hfill (review from MATH 100)]{
+Most DEs cannot be solved analytically.\vfill In this case we can solve them numerically. \vfill The simplest numerical method is called Euler's method.\vfill
+
+\student{Consider the first order DE \[y'=f(y,t).\]Use the approximation \[y(t+\Delta t) \approx  y(t) + f(y(t), t)\Delta t\] with some finite $\Delta t$.}
+
+}
+
+\slide[Euler's Method + Initial Value Problems]{
+We can approximate numerical solutions to the differential equation \[\frac{dy}{dt}=f(t,y), \quad y(t_0)=y_0\] using the following iteration method: 
+\begin{align*}
+    y_1&=y_0+f(t_0,y_0)\Delta t\\
+    y_2&=y_1+f(t_1,y_1)\Delta t\\
+    \vdots &\\
+    y_{i+1}&=y_i+f(t_i,y_i)\Delta t,
+\end{align*}
+where $y_i$ approximates $y(t_i)$ and $\Delta t=t_{i+1}-t_i.$ \vfill If you want to approximate $y(T)$  for $T>t_0$ using $N$ steps, then $\Delta t=\frac{T-t_0}{N}$. In this way $y_N \approx y(T)$
+
+}
+
+\slide{
+Let $y(t)$ be the solution to the initial value problem \[\frac{dy}{dt}=y, \quad y(0)=1.\]
+Use Euler's method to approximate $y(0.3)$ with step size $\Delta t=0.1$.\vfill
+\begin{table}[]
+\begin{tabular}{|l|l|l|l|}
+\hline
+t   & $y(t)$ & $f(y,t)$ & $y(t)+f(y,t)\Delta t$ \\ \hline
+0   & 1    &  \student{1}     &         \student{1+0.1}                           \\ \hline
+0.1 &  \student{1.1}    & \student{1.1}       &     \student{1.1+0.11}                                \\ \hline
+0.2 &    \student{1.21}      &   \student{1.21}      &         \student{1.21+ 0.121}                            \\ \hline
+0.3 &    \student{1.331}       &        &                                    \\ \hline
+\end{tabular}
+\end{table}
+}
+
+\slide[Approximation Error]{
+\vspace{-1em}
+The exact solution of $y'=y$ with $y(0)=1$ is $y=e^t$, so at $t=0.3$ the solution will be $y(1)=e^{0.3}=1.34986$. 
+\[\text{Error} = |y_\text{approx}-y_\text{exact}|\]
+
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Step size & Numerical solution & Error\\
+    \hline
+     $\Delta t=0.1$& $y(0.3)=y_{3}=1.331$& 0.0188588  \\
+     $\Delta t=0.05$ &$y(0.3)=y_{6}=1.3401$ & 0.00976317\\
+     $\Delta t=0.025$ & $y(0.3)=y_{12}=1.344891$& 0.00496998\\
+     \hline
+\end{tabular}
+\end{center}
+\vfill
+\uline{Error Bounds:}
+We can prove that for Euler's method \[\text{Error} \leq c_1 \Delta t \qquad \Rightarrow \qquad  \text{first-order method} \] 
+\vfill
+ \uline{Higher order numerical schemes:}\vfill
+Improved Euler: \hspace{0.6cm} Error $\leq c_2\Delta t^2\quad$ 2nd order method\\
+Runge-Kutta (RK4): Error $\leq c_3 \Delta t^4\quad $ 4th order method
+
+}
+
+\end{document}

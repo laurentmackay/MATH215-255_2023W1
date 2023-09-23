@@ -1,0 +1,98 @@
+\input{notes.tex}
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+\begin{document}
+
+
+\section{Lecture 5}
+\subsection{Introduction}
+\settoggle{covered}{true}
+\slide[Recall:]{\vspace{-1.25em}
+\itmz{
+\item General linear 1st order ODE: $y\p +p(t)y=h(t)$\vfill
+\itmz{
+\item To solve,  turn the LHS into an total derivative: $$y\p +p(t)y \quad \rightarrow \quad \dd{}{t}(\mu\cdot y ) = \mu y\p  + \mu\p y$$
+
+}
+}
+We will now explore the idea of total derivatives in more depth:\vfill
+Consider a function of two variables $\Phi(x,y)$
+\student{\algn{\dd{}{x} \Phi(x,y) &= \pd{}{x} \Phi(x,y) +\pd{}{y} \Phi(x,y) \dd{y}{x} \\
+&=\underbrace{\underbrace{\Phi_x}_{\text{partial}}+\underbrace{\Phi_y}_{\text{partial}} \dd{y}{x}}_{\text{total}}
+}}
+}
+\subsection{Exact Equations}
+
+\slide[Solve $(y+2x)+(x-3y^2)\dd{y}{x}=0$]
+{Idea: write as a total derivative \hfill \student{$\dd{}{x} \Phi(x,y)=0 \quad \Rightarrow \Phi(x,y) =\text{const.} $}
+\student{\algn{
+\text{LHS=} \dd{}{x} \Phi(x,y) &= \Phi_x + \Phi_y\dd{y}{x} = 0 &\larray{\Phi_x = y+2x \\ \Phi_y = x-3y^2}\\
+\Phi (x,y) =\intop \Phi_x dx & + h(y) = \intop y+2x dx + h(y) \\ &= xy+x^2+ h(y)\\
+\Phi_y &= x-3y^2 = x+h'(y)\quad \qquad \Rightarrow &h'(y)=-3y^2\\
+\Rightarrow h(y) &= -y^3+C  \\\\ \Rightarrow  \Phi (x,y)&= xy+x^2 -y^3+C 
+} \vfill \centering Implicit solution: $\qquad xy+x^2 -y^3=C$
+}
+}
+\settoggle{covered}{false}
+\slide[Exact Equations]{
+A DE $M(,x,y)+N(x,y)\dd{y}{x}=0$ is called \uline{exact} if there exist a $\Phi(x,y)$ such that \vfill\student{ \[M=\Phi_x,\qquad N=\Phi_y. \]}\vfill
+The function $\Phi(x,y)$ is called a \student{\uline{potential.}}\vfill
+
+For exact eqs., the implicit function $y(x)$ given by \[\Phi(x,y)=C\] is the solution.
+
+}
+
+\slide[Example: Spring Potential]{
+Consider a mass $m$ at position $x(t)$ moving with speed $v(t)$ while attached to a spring with zero rest length and stiffness $k$: \[  \Phi(x,v) = \frac12 k x^2 +  \frac12 m v^2  \]
+\vfill
+Assuming no forcing or friction, energy is conserved\[ \Phi(x,v) = E_0,\qquad\quad E_0=\text{initial energy}\] producing motion tracing out an ellipse in $(x,v)-$space: 
+\vfill
+\twomini[.25]{.5}{.5}{
+\tikzplot{2}{2}{.65}{.65}{x(t)}{v(t)}{
+ \draw (0,0) ellipse (1.5cm and .5cm);
+ \draw (0,0) ellipse (.5cm and .15cm);
+ \draw (0,0) ellipse (1cm and .33cm);
+}
+}{
+All these ellipses satisfy a DE:
+\[kx+mv\dd{v}{x}=0\]
+}
+}
+
+
+\slide[When is a DE $M(,x,y)+N(x,y)\dd{y}{x}=0$ exact?]{
+Since $\Phi_{xy}=\Phi_{yx}$, a necessary and sufficient that \student{\[M_y=N_x\]}
+\vfill
+\alert{Theorem:}
+If $M_y=N_x$, near any $(x_0,y_0)$ there is \uline{locally} a function $\Phi(x,y)$ such that $\Phi_x=M$ \& $\Phi_y=N$.
+\vfill
+N.B.: $\Phi(x,y)$ exists locally, maybe not globally (e.g., if $M$ or $N$ are piecewise functions).
+}
+
+\slide[General Solution Method for an Exact DE.]{
+\[M(,x,y)+N(x,y)\dd{y}{x}=0, \quad \text{with } M_y=N_x\]
+\enum{\item Since $\Phi_x=M$, initially fix y \[\Phi(x,y) = \intop M(x,y) dx = Q(x,y) + \student{ \underbrace{\ucover{h(y)}}_{\text{const.}}} \]\vfill
+\item Then note that $N=\Phi_y = \pd{}{y}Q+h'$
+\subitem{$h'=N-Q_y$ \hfill  \student{(sanity check: must be independent of $x$)} \item Integrate to find $h(y)$} \vfill
+\item Implicit solution $\Phi(x,y)=C$ }
+}
+
+\slide[\ex{$(2x+\sin(y))+(1+x)\cos(y)\frac{dy}{dx}=0$}]{ Decide if the DE is exact. If yes, find the solution.
+
+\student{\algn{
+M&=2x+\sin(y) & N&=(1+x)\cos(y)\\
+M_y &= \cos(y) & N_x&=\cos(y) \quad \text{exact}\checkmark \\
+\Phi(x,y)&=\intop 2x+\sin(y) dx \\&= x^2+x\sin(y) + h(y)\\
+\Phi_y &= N \\ x\cos(y) + h'(y) &= (1+x)\cos(y) &h'(y)&=\cos(y)\\
+&&h(y)&=\sin(y)+C\\\\
+\Phi(x,y) &= x^2+(x+1)\sin(y) +C
+}
+\centering Implicit solution: $x^2+(x+1)\sin(y)=C$}
+
+
+
+}
+
+\end{document}
+

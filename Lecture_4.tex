@@ -6,7 +6,7 @@
 
 
 \section{Lecture 4}
-
+\settoggle{covered}{true}
 \subsection{Introduction}
 \slide[Recall]{
 We saw how to solve ODEs of the form \[y\p=f(t)\cdot g(y) \qquad -\qquad \text{Separable Equations}\]
@@ -50,7 +50,7 @@ e^{t^2}y & = \frac13 e^{u} + C \\&= \frac13 e^{t^3} +C & y(t) &= \frac13 e^t +Ce
 \item Isolate $y(t)$: \student{\[ y(t) = \frac{\intop h(t)\mu(t)\text{d}t + C}{\mu(t)} \]}}
 }
 
-
+\settoggle{covered}{false}
 
 \slide{\ex{Find the general solution of $y\p-3y=e^t$.} \hfill $\boxed {\rarray{ y(t) = \frac{\intop h(t)\mu(t)\text{d}t + C}{\mu(t)} \\ \mu(t)=e^{\intop p(t)\text{d}t }}}$
 
@@ -106,7 +106,7 @@ At time $t=0$ a tank contains 10 kg of salt dissolved in 200 liters of water. Wa
 \itmz{
 \item General linear 1st order ODE: $y\p +p(t)y=h(t)$\vfill
 \itmz{
-\item To solve,  turn the LHS into an exact derivative: $$y\p +p(t)y \quad \rightarrow \quad \text{d}(\mu\cdot y ) = \mu\p y +\mu y\p$$
+\item To solve,  turn the LHS into an total derivative: $$y\p +p(t)y \quad \rightarrow \quad \text{d}(\mu\cdot y ) = \mu y\p  + \mu\p y$$
 \subitem{ Multiply by an integrating factor $\mu(t)=e^{\intop p(t)\text{d}t} $
 \item General solution: $ y(t) = \frac{\intop g(t)\mu(t)\text{d}t + C}{\mu(t)}$}
 }\vfill
