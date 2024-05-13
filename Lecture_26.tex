@@ -1,0 +1,251 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\settoggle{covered}{true}
+\begin{document}
+\section{Lecture 26}
+\subsection{Preamble}
+\slide[Introduction]{
+
+Almost all nonlinear systems cannot be solved analytically. Instead, we can use local stability analysis to gain qualitative infomation about solutions.
+\vfill
+\enum{\item ~ \student{Classify the stability and type of all fixed points\subitem{Fixed points can lose stability, collide, and/or dissapear/appear as system parameters are changed.}}\vfill
+
+\item ~\student{Draw phase plane sketches to get a geometric picture \subitem{Use the fact that derivatives switch sign when trajectories cross nullclines}}}
+\vfill
+}
+
+
+\subsection{Lamps vs. Lasers}
+\slide[Lamps]{
+Lamps work at a quantum level  by pumping  molecules into an excited state, such that they release photons (light particles) as they return back down to the ground state.\vfill
+\twomini[.5]{.5}{.5}{
+\centerline{\includegraphics[width=.7\columnwidth]{images/Jablonski_lamp.pdf}}
+}{
+\vspace{3em}
+\centerline{\includegraphics[width=.8\columnwidth]{images/incoherent.png}}
+}\vfill
+The excitation/emission process is random, producing photons with uncorrelated phases and orientation. This is what we call \uline{incoherent} light.
+}
+
+\slide[Lasers \hfill \small (\textbf{L}ight \textbf{A}mplification by \textbf{S}timulated \textbf{E}mission of \textbf{R}adiation)]{\vspace{-1em}
+Lasers work through a process called \textbf{stimulated emission}, photon emission from one molecule triggers the emission of a photon by its neighbour with \uline{similar phase and orientation}.\vspace{1.5em}
+\twomini[.5]{.65}{.35}{
+\centerline{\includegraphics[width=\columnwidth]{images/Jablonski_laser.pdf}}
+}{
+\vspace{3em}
+\centerline{\includegraphics[width=.9\columnwidth]{images/coherent.png}}
+}\vspace{1.5em}
+
+
+If enough stimulated emission happens, we get an emission cascade of photons with highly correlated phase and orientation. This results in \uline{coherent} light beams that can travel long distances with minimal spread.
+}
+
+\subsection{Lamps vs. Lasers}
+\slide{
+A simple model for a laser considers two variables: \enum{\item $N(t)$ = \student{\# of ``ordinary'' excited molecules }\item $n(t)$ = \student{\# of ``lasing'' molecules that will emit photons coherently.}}
+\vfill
+The dynamics of the two variables are given by 
+\vspace{.5em}
+\student{\algn{n' &= nN-n\\ N' &= -nN-N+p}}
+\vspace{.5em}
+
+where $p$ is a ``pumping'' parameter that quantifies the rate of excitation.
+\vfill
+see Laser Physics by  Miloni and Eberly (1988) for more details.
+}
+
+\slide{
+\ex{Find all critical points for the system: }
+\[ n' = nN-n,\quad N' = -nN-N+p \]
+\vfill
+\student{
+\algn{\text{\uline{n-nullclines:}}& & \text{\uline{N-nullclines:}}&\\
+0&=n(N-1) &0&=-N(1+n)+p\\
+n=0&\quad \text{and}\quad  N=1 &N&=\frac{p}{1+n}\intertext{intersections}
+n=0\;\; \&\;\; N&=\frac{p}{1+n}\Rightarrow N=p\\
+N=1\;\; \& \;\; N&=\frac{p}{1+n}\Rightarrow  n =p-1\\
+&\qquad \qquad \Rightarrow N=1
+}
+\vfill
+\[\uline{\text{critical points:}} \quad \underbrace{(0,p)}_{\text{lamp}}, \quad \text{and} \quad \underbrace{(p-1, 1)}_{\text{laser}}\]
+}
+}
+
+
+
+
+\slide{\vspace{-.5em}
+\ex{Given the simple laser model}
+\[ n' = nN-n,\quad N' = -nN-N+p, \]
+find a condition on $p$ that ensures that the laser state is the unique stable steady state.\vspace{-0.5em}
+\student{
+\[\mathbf{J} = \mat{cc}{N-1 & n \\ -N & -n-1}\]
+\vspace{-2.5em}
+
+\algn{
+\text{\uline{lamp:}}& \quad (0,p) & \text{\uline{laser:}}& \quad (p-1,1)\\
+\mathbf{J}^* &= \mat{cc}{p-1 & 0 \\ -p & -1} & \mathbf{J}^* &= \mat{cc}{0 & p-1 \\ 1 & -p}
+\intertext{Find the eigenvalues, i.e., $\det({J}^*-\lambda \mathbf{I}) =0$ }
+(p-1-\lambda)(-1-\lambda)&=0 & -\lambda(-p-\lambda)&+1-p=0\\
+\lambda&=p-1, -1 &\lambda^2-p\lambda+1-p&=0\\
+&&\lambda = \frac{-p}2 \pm & \frac{\sqrt{(p-2)^2}}{2}&\\
+&&=-1,1&-p
+}
+}
+}
+
+\slide{\vspace{-.5em}
+\ex{Given the simple laser model}
+\[ n' = nN-n,\quad N' = -nN-N+p, \]
+find a condition on $p$ that ensures that the laser state is the unique stable steady state.\vspace{-0.5em}
+
+
+\algn{
+\text{\uline{lamp:}}& \quad (0,p) & \text{\uline{laser:}}& \quad (p-1,1)\\
+\lambda &= p-1, -1 &\lambda &= -1,1-p
+}
+\vfill
+\student{
+
+Both steady states have an eigenvalue of -1, independent of $p$.
+\vfill
+For $p<1$, the lamp state is a stable  node and the laser state is a saddle (unstable).
+\vfill
+For $p>1$, the lamp state is a saddle and the laser state is stable node.
+
+}
+}
+
+\slide[Laser Threshold]{
+The laser and lamp steady states collide at $p=1$ and exchange their stability.
+\centerline{
+\tikzplot[\xcoord{2}{1}]{.1}{6}{1}{4}{p}{n^*}{
+\draw[ultra thick, black] (0,0) -- (2,0);\draw[ultra thick, black, dashed] (2,0) -- (6,0);
+\draw[Black] (1.25,.25) node{lamp};
+\draw[ultra thick, black] (2,0) -- (6,2);\draw[ultra thick, black, dashed] (0,-1) -- (2,0);
+\draw[Black] (4,1.5) node{laser};
+\draw[black,->] (5,0.5)--(5,1.25);\draw[black,->] (5,2.5)--(5,1.75);
+\draw[black,->] (.5,.75)--(.5,.25);\draw[black,->] (.5,-.65)--(.5,-.25);
+}
+}
+
+}
+
+\settoggle{covered}{false}
+
+\subsection{Phase Plane Analysis of Limit Cycles}
+
+\slide[Your heart beats cyclically]{\vspace{-1em}
+The Sinoatrial (SA) node is the main clock.
+\vfill
+\twomini[.56]{0.475}{0.475}{
+\centerline{\includegraphics[width=.55\columnwidth]{images/heart electrical system.png}}
+\tiny source: https://www.hopkinsmedicine.org/health/conditions-and-diseases/anatomy-and-function-of-the-hearts-electrical-system
+
+}{
+\centerline{\includegraphics[width=\columnwidth]{images/pacemaker ap.jpg
+}}
+\tiny source: https://step1.medbullets.com/cardiovascular/108016/sa-node-action-potential
+
+}
+\vfill
+\centerline{ These oscillations must be robust to perturbations, otherwise you would die :( }
+
+
+\vfill
+\student{Such periodic solutions are called stable limit cycles \subitem{ i.e., a cycle (or closed loop) that the nonlinear system approaches in the limit $t\to \infty$ }}
+}
+
+
+\slide[Limit Cycles]{
+A limit cycle is an isolated closed trajectory. Isolated means that neighboring trajectories are not closed; they spiral either toward or away from the limit cycle.
+\vfill
+\student{\centerline{Spiral trajectories $\Rightarrow$ complex conjugate eignevalues.}}
+\vfill
+\centerline{\includegraphics[width=0.8\columnwidth]{images/limit_cycles.png}}
+\vfill
+\student{\centerline{Stable limit cycles form around unstable spiral fixed points}}
+}
+
+\slide[Van der Pol Oscillator]{
+
+The Van der Pol Oscillator is a simple model that exhibits limit cycles. Its dynamics are given by \student{\[x'  = y - \frac13 x^3+x,\quad y'=a-x  \]} where $a$ is a forcing parameter.
+\vfill
+Find the nullclines for this model.
+\student{
+\algn{\text{\uline{x-nullcline:}}& & \text{\uline{y-nullcline:}}&\\
+y&=\frac13 x^3-x & x&=a}
+}
+
+}
+\slide[Van der Pol Oscillator]{
+The Van der Pol Oscillator has a \uline{unique} fixed point at
+\student{\[x=a, \quad  y = \frac13 a ( a^2-3) \]}
+with eigenvalues given by
+\student{\[\lambda = \frac12 \left(1 - a^2 \pm \sqrt{ a^4 - 2 a^2-3}\right) .\]
+
+These are complex conjugate eigenvalues that become stable for $|a|>1$.
+\vfill
+Unstable spiral for $|a|<1$.
+\vfill
+Stable spiral for $|a|>1$.
+
+}
+}
+
+\slide{
+Use the nullclines to sketch a solution trajectory for \[x'  = y - \frac13 x^3+x,\quad y'=a-x  \] with a=-1.5 starting at (0,-0.5)
+
+
+\centerline{
+\tikzplot[\xcoord{2}{1}\xcoord{-2}{-1}\ycoord{2}{1}\ycoord{-2}{-1}]{5}{5}{2.5}{2.5}{x}{y}{
+\draw[ultra thick, domain=-2.5:2.5, smooth] plot ({2*\x},{2*\x*\x*\x/3-2*\x}) ;
+\draw[] (3,2) node{x-nullcline};
+\draw[ultra thick, dashed] (-3,-3)--(-3,3);
+\draw[] (-1.95,-1.5) node{y-nullcline};
+\filldraw[] (-3,0.75) circle (3pt);
+\draw[] (0,-1) node[opendot]{};
+\student{
+\draw(1.5,-2) node[align=center]{$x'<0$\\$y'<0$};
+\draw(-3.6,-2) node[align=center]{$x'<0$\\$y'>0$};
+\draw(-4,1.5) node[align=center]{$x'>0$\\$y'>0$};
+\draw(-1,2) node[align=center]{$x'>0$\\$y'<0$};
+}
+}
+}
+
+}
+
+
+
+
+\slide{
+Use the nullclines to sketch a solution trajectory for \[x'  = y - \frac13 x^3+x,\quad y'=a-x  \] with a=0.5 starting at (0,-0.25)
+
+
+\centerline{
+\tikzplot[\xcoord{2}{1}\xcoord{-2}{-1}\ycoord{2}{1}\ycoord{-2}{-1}]{5}{5}{2.5}{2.5}{x}{y}{
+\draw[ultra thick, , domain=-2.5:2.5, smooth] plot ({2*\x},{2*\x*\x*\x/3-2*\x}) ;
+\draw[] (3.2,2) node{x-nullcline};
+\draw[ultra thick, dashed, ] (1,-3)--(1,3);
+\draw[] (1.95,-2.3) node{y-nullcline};
+\filldraw[] (1,-0.916667) circle (3pt);
+\draw[] (0,-0.5) node[opendot]{};
+
+\node[rectangle, draw ,align=center] (r) at (-2,-1.8)  {$x'<0$\\$y'>0$};
+\node[rectangle, draw ,align=center] (r) at (3.6,-1.8) {$x'<0$\\$y'<0$};
+\node[rectangle, draw ,align=center] (r) at (-4,1.5) {$x'>0$\\$y'>0$};
+\node[rectangle, draw ,align=center] (r) at (2.5,1){$x'>0$\\$y'<0$};
+
+}
+}\vfill
+Note: the solution trajectory should approach a stable limit cycle
+}
+
+
+
+\end{document}

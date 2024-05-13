@@ -1,0 +1,207 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+
+\begin{document}
+
+\section{Lecture 13}
+\subsection{Preamble}
+
+\slide[Recall: $ay''+by'+cy=f(t)$]{
+We have studied this DE extensively, and know how to solve it for a large class of functions $f(t)$ that are \uline{continuous}.
+
+\vfill
+
+\textbf{Note: }Discontinuities in $f(t)$ create kinks or jumps in the solution.
+\tikzplot[\xcoord{3}{\text{kink}} ]{.1}{5}{.1}{1.5}{t}{}{
+
+\draw[domain=0:2, thick, samples=100] plot ({\x*1.5}, {.8*exp(-\x)});
+\draw[domain=2:10, thick, samples=100] plot ({\x*1.5}, {.8*exp(-\x)+(1-exp(-(\x-2)))*1.25});
+
+}\hfil \tikzplot[\xcoord{3}{\text{jump}} ]{.1}{5}{.1}{1.5}{t}{}{
+
+\draw[domain=0:2, thick, samples=100] plot ({\x*1.5}, {.8*exp(-\x)});
+\draw[domain=2:10, thick, samples=100] plot ({\x*1.5}, {.8*exp(-(\x-2))});
+\draw[thick , dashed] (3,0.1)--(3,.8);
+
+}\vfill 
+
+How can we deal with a RHS with, a potentially infinite number of, discontinuities?
+\vfill
+\student{
+Idea: Apply a transformation to the RHS to make it ``nice''.
+\vfill
+\centerline{The Laplace Transform.}
+}
+
+
+}
+
+
+\subsection{Laplace Transforms}
+\slide[Laplace Transform Workflow]{
+\vspace{-1em}
+Transforms the problem from the time domain to the ``solution''-domain.
+\vspace{-0.15em}
+\[
+\begin{array}{cccccc}
+\color{RubineRed}
+\tiny{t-domain} &
+\color{RubineRed}
+\begin{array}{c}
+\text{Unknown y(t)}\\
+\text{that solves ODE}
+\end{array} &   \color{RubineRed}\underrightarrow{\text{Solve ODE}} &\color{RubineRed} \text{Found y(t)}\\&
+\student{
+\begin{array}{ccc}
+\qquad\qquad & \left\downarrow \vcenter{\hrule height6em}\right.\kern-\nulldelimiterspace & \begin{array}{c}
+\text{Transform }\\
+\text{y(t) and}\\
+\text{the ODE}
+\end{array}\end{array}} &    & \student{\begin{array}{ccc}
+\begin{array}{c}
+\text{Invert }\\
+\text{the}\\
+\text{transform}
+\end{array} & \left\uparrow \vcenter{\hrule height6em}\right.\kern-\nulldelimiterspace & \qquad\qquad\end{array}}\\\\
+\color{YellowOrange}s-domain&\color{YellowOrange}\begin{array}{c}
+\text{Unknown Y(s)}\\
+\text{that solves an }\\\text{algebraic equation}
+\end{array} &  \color{YellowOrange} \underrightarrow{\text{Solve alg. eq.}}   &\color{YellowOrange}\text{Isolate Y(s)}\\
+\\
+\end{array}
+\]
+\vfill
+\student{
+Laplace Transform of $y(t)$:
+\[\lap{y(t)}=Y(s)=\int_0^\infty e^{-st} y(t)dt\]
+
+}
+}
+
+
+
+
+\slide{\ex{$y(t)=\frac12$}\student{\hspace{3em}$\lap{y(t)}=Y(s)=\lapint{\frac12}$
+\algn{&=-\frac{1}{2s}e^{-st}\Big|_0^\infty
+&=-\lim_{A\to\infty}\frac{1}{2s}e^{-st}\Big|_0^A\\
+&=-\frac{1}{2s}\lim_{A\to\infty}\paren{e^{-sA}-1}\\
+&=\begin{cases}
+\frac{1}{2s}& \text{if }s>0\\
+DNE & \text{if }s\leq0
+\end{cases}}
+}\vfill
+\centerline{
+\tikzplot[\textnode{4.75}{1.5}{\overset{\mathcal{L}}{\rightarrow}}]{1}{3}{.1}{2.1}{\color{RubineRed}t}{\color{RubineRed}y(t)}{
+\draw[domain=-1:6, smooth, RubineRed, thick, samples=150] plot ({\x}, {1.5});}
+\hfill 
+\tikzplot{1}{3}{.1}{2.1}{\color{YellowOrange}s}{\color{YellowOrange}Y(s)}{
+\draw[domain=0.01:6, YellowOrange, thick, samples=100] plot ({\x}, {.02/(\x/5)});
+\draw[pattern=north west lines, pattern color=\normcolor] (-2,-2) rectangle (0,4);}
+}
+}
+
+
+
+\slide{
+\ex{$y(t)=e^{-6t}$}\student{
+\algn{\lap{y(t)}&=Y(s)=\lapint{e^{-6t}}\\
+&=\intop_0^\infty{e^{-(s+6)t}} = -\frac{1}{s+6} 
+\lim_{A\to\infty}\left( e^{-(s+6)A} - 1\right) \\
+&=\begin{cases}
+\frac{1}{s+6} & \text{if }s>-6\\
+DNE & \text{if }s\leq-6
+\end{cases}
+}}
+\vfill
+\centerline{
+\tikzplot[\textnode{4.75}{1.5}{\overset{\mathcal{L}}{\rightarrow}}]{1}{3}{.1}{1.5}
+{\color{RubineRed}t}
+{\color{RubineRed}y(t)}{
+\draw[domain=-1:6, smooth, RubineRed, thick, samples=150] plot ({\x}, {.4*exp(-\x)});}
+\hfill 
+\tikzplot[\xcoord{-.5}{-6}]{1}{3}{.1}{1.25}{\color{YellowOrange}s}{\color{YellowOrange}Y(s)}{
+\draw[domain=-.499:6, YellowOrange, thick, samples=100] plot ({\x}, {.15/(\x+.5)});
+\draw[pattern=north west lines, pattern color=\normcolor] (-2,-2) rectangle (-.5,4);}
+}
+}
+
+\slide[General Results]{
+For any constants $C$ and $a$ we have the Laplace Transforms of the following functions $y(t)$:
+
+\vfill
+\algn{y(t)&=C&\lap{C}&=\frac{C}{s}&\text{Constant}\\
+y(t)&=e^{at}&\lap{e^{at}}&=\frac{1}{s-a}&\text{Exponential Function}\\
+}
+
+\vfill
+\student{
+From now on, we don't worry too much about the domain of definition.\vfill
+In general, there are always some conditions on $s$ for the integrals to exist.}
+}
+
+
+\slide[General Result: Linearity of Laplace Transforms]{
+Given any two function $f(t)$ and $g(t)$ as well as any constant $c$.
+\vfill
+\enum{\item $\lap{f(t)+g(t)}=\student{\lapint{\paren{f(t)+g(t)}}}$\\~\\
+\student{$=\lap{f(t)}+\lap{g(t)}=F(s)+G(s)$}\vfill
+\item $\lap{cf(t)}=\student{c\lap{f(t)}=cF(s)}$\vfill
+}
+\student{\centerline{The Laplace tranform is \uline{linear}.}}
+}
+
+\slide{
+\ex{$y(t)=\cos(at)$ or $y(t)=\sin(at)$} \\~\\ \student{
+Euler's Identity:\[e^{iat} = \cos(at) + i\sin(at) \] 
+\algn{\lap{e^{iat}} &= \lap{\cos(at)} + i \lap{sin(at)}\\
+&=\frac{1}{s-ia}  = \frac{1}{s-ia} \times  \frac{s+ia}{s+ia}\\
+&= \frac{s+ia}{s^2-ias+ias-i^2a^2} =  \frac{s+ia}{s^2+a^2}\\\\
+&=\underbrace{\frac{s}{s^2+a^2}}_{\lap{\cos(at)}} + i \underbrace{\frac{a}{s^2+a^2}}_{\lap{\sin(at)}}   }
+\vfill
+Same result can be found through integration by parts (twice).
+}
+}
+
+
+\slide{
+\ex{$y(t)=t$}\vspace{-1em}
+\student{
+\algn{\lap{t} =\lapint{t} &= \lapint{t} \\\\ \text{let}  \larray{u=t,\; du=dt\\dv =e^{-st}dt,\; v=-\frac{e^{-st}}{s}}&\\
+\intop t e^{-st} dt &= uv - \intop vdu  = \frac{te^{-st}}{s} + \intop \frac{e^{-st}}{s}\\
+&= \frac{te^{-st}}{s}- \frac{e^{-st}}{s^2} = -\frac{e^{-st}(st+1)}{s^2}\\
+\lap{t} =   \lim_{A\to\infty}-\frac{e^{-st}(st+1)}{s^2} \Big|_0^A& =\lim_{A\to\infty} - \frac{e^{-sA}(sA+1)}{s^2}   + \frac{1}{s^2}\\
+&=\frac{1}{s^2} \qquad \text{($s>0$)}
+}
+For $y(t)=t^k$,  integrate by parts $k$ times.
+}
+}
+
+\slide[General Results]{
+For any constants $C$, $a$, $\omega$, and $k$ we have the Laplace Transforms of the following functions $y(t)$:
+
+\vfill
+\algn{y(t)&=C&\lap{C}&=\frac{C}{s}&\text{Constant}\\
+y(t)&=e^{at}&\lap{e^{at}}&=\frac{1}{s-a}&\text{Exponential Function}\\
+y(t)&=\cos(\omega t)&\lap{\cos{\omega t}}&=\frac{s}{s^2+\omega^2}&\text{Cosine}\\
+y(t)&=\sin(\omega t)&\lap{\sin{\omega  t}}&=\frac{\omega}{s^2+\omega^2}&\text{Sine}\\
+y(t)&=t^k&\lap{t^k}&=\frac{k!}{s^{k+1}}&\text{Power Function}\\
+}\vfill
+}
+
+\slide[Summary]{
+\vfill
+\itmz{
+
+\item Laplace transform (LT) maps $f(t) \rightarrow F(s)$ \vfill
+\subitem{From "t-space" to "s-space" . \item We will learn to invert the transform in the next lecture.}\vfill
+\item LT: $\lap{f(t)}=F(s)=\lapint{f(t)}$ \vfill \subitem{Evaluation of the integrals is tedious. \item We use general results to quickly transform functions. \item Many tables exist online and in textbooks.} \vfill
+\item  LT is linear because the integral is linear \vfill
+\enum{\item $\lap{f+g} = F(s)+G(s)$\item $\lap{cf}=cF(s)$}\vfill
+}
+}
+
+
+\end{document}

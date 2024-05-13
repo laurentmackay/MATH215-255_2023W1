@@ -1,0 +1,167 @@
+\input{notes.tex}
+\usepackage{circuitikz}
+\ctikzset{bipoles/thickness=1.2}
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+\usetikzlibrary{arrows}
+
+\begin{document}
+\section{Lecture 18}
+\subsection{Introduction}
+
+\slide[Imagine Hitting a Golf Ball]{\vspace{-1em}
+
+\tikz{\draw (0,0) node{\includegraphics[height=.2\linewidth]{images/golf_ball_1.png}}; \draw[black] (0,-.1) node[fill=white, fill opacity=0.75, text opacity=1, outer sep=0.01, inner sep=1]{\scriptsize$v(0^-)=0$}; }\hfill \tikz{\draw (0,0) node{\includegraphics[height=.2\linewidth]{images/golf_ball_2.png}}} \hfill \tikz{\draw (0,0) node{\includegraphics[height=.2\linewidth]{images/golf_ball_3.png}}; } \hfill \tikz{\draw (0,0) node{\includegraphics[height=.2\linewidth]{images/golf_ball_4.png}}; \draw[black] (.3,.1) node[fill=white, fill opacity=0.75, text opacity=1, outer sep=0.01, inner sep=1, rotate=30]{\scriptsize$v(0^+)\gg0$}; }
+
+\tiny source:  \url{https://www.youtube.com/watch?v=6TA1s1oNpbk&t=80s}
+\normalsize\vspace{-1em}
+
+\twomini[.6]{.6}{.33}{
+ \vspace{2em}
+The ball is initially at rest, and suddenly a large force is applied to the ball for a very brief period of time.\\~\\
+The details of what happens at $t=0$ are too complicated.
+}{
+\tikzplot[ ]{2}{2}{.3}{3.5}{t}{\text{force}(t)}{
+
+\foreach \xtau in { .08}{
+\draw[ultra thick] (-\xtau,0)--(-8,0) ;
+\draw[ultra thick] (-\xtau, 0.25/\xtau)--(\xtau,0.25/\xtau) ;
+\draw[thick, dashed] (-\xtau,0.25/\xtau)--(-\xtau,0) ;
+\draw[thick, dashed] (\xtau,0.25/\xtau)--(\xtau,0) ;
+\draw[ultra thick] (\xtau,0)--(6,0) ;
+
+}
+}
+}\vfill
+\student{\centerline{Idea: Approximate the force as an infinitesimally short impulse.}}
+}
+
+\subsection{step pulse}
+\slide[ Normalized Step Pulse ($\delta_\tau$) ]{
+\vspace{-1em}
+\newcommand{\hi}{2}
+\newcommand{\xtau}{1}
+\centerline{
+\tikzplot[\xcoord{-\xtau}{-\tau} \xcoord{\xtau}{\tau}  ]{4}{4}{.1}{2.5}{t}{\delta_\tau(t)}{
+\draw[ultra thick] (-\xtau,0)--(-5,0) ;
+\draw[] (-\xtau,\hi) node[vertex]{};
+\draw[ultra thick] (-\xtau, \hi)--(\xtau,\hi) ;
+\draw[thick, dashed] (-\xtau,\hi)--(-\xtau,0) ;
+\draw[] (-\xtau,0) node[opendot]{};
+\draw[thick, dashed] (\xtau,\hi)--(\xtau,0) ;
+\draw[] (\xtau,0) node[opendot]{};
+\draw[] (\xtau,\hi) node[vertex]{};
+\draw[ultra thick] (\xtau,0)--(5,0) ;
+\draw[<-] (0.05,\hi-0.1)--(0.3,\hi-0.3) node[right, xshift=-.1cm, yshift=-.1cm]{$\frac{1}{2\tau}$};
+}
+}
+\vfill\student{
+\twomini[.3]{.5}{.5}{\uline{Function:}\algn{\delta_\tau &=  \begin{cases} \frac{1}{2\tau} & |t|\leq \tau \\ 0 & |t|>\tau\end{cases} \\ &=\frac{u(t+\tau)-u(t-\tau)}{2\tau}}}{\uline{Integral:} \algn{I(\tau) &=\int_{-\infty}^{\infty} \delta_\tau(t) dt = \int_{-\tau}^{\tau} \frac{dt}{2\tau}\\&=1}}
+}}
+
+\slide[Taking the limit $\tau\to0$]{
+\newcommand{\hi}{2}
+\newcommand{\xtau}{1}
+\centerline{
+\tikzplot[ ]{8}{4}{.1}{7}{t}{\delta_\tau(t)}{
+\student{
+\draw[]  (-7,2.75) node{\uline{Integral:}};
+\draw[]  (-5,2) node{$\lim_{\tau\to0}I(\tau)=1$};
+\draw[]  (-7,6.75) node{\uline{Function:}};
+\draw[]  (-5,6) node{$\lim_{\tau\to0}\delta_\tau(t)=\begin{cases} \lim_{\tau \to 0}\frac{1}{2\tau} & t=0 \\ 0 & t\neq0\end{cases} $};
+\draw[]  (-4,4.5) node{$=\begin{cases} D.N.E. & t=0 \\ 0 & t\neq0\end{cases}$};
+}
+\foreach \xtau in {1,.5,.25, 0.125, .08}{
+\draw[ultra thick] (-\xtau,0)--(-8,0) ;
+\draw[ultra thick] (-\xtau, 0.5/\xtau)--(\xtau,0.5/\xtau) ;
+\draw[thick, dashed] (-\xtau,0.5/\xtau)--(-\xtau,0) ;
+\draw[thick, dashed] (\xtau,0.5/\xtau)--(\xtau,0) ;
+\draw[ultra thick] (\xtau,0)--(6,0) ;
+\draw[<-] (\xtau+0.1,0.5/\xtau)--(\xtau+0.3,0.5/\xtau) node[right,]{$\tau=\xtau$};
+}
+}
+}
+}
+
+\subsection{Dirac Delta}
+
+
+\slide[Delta Dirac Function: $\delta(t) \approx \lim_{\tau \to 0} \delta_\tau (t) $]{\vspace{-1em}
+\textbf{Theorem:} For any function $f(t)$ that is integrable in some neighbourhood around $c$\[\int_{-\infty}^{\infty} \delta(t-c) f(t) dt = f(c)\]
+Integrating against $\delta(t-c)$ essentially "selects" the value of the integrand at $t=c$.
+\vfill
+
+More generally
+\twomini[.25]{.65}{.35}{
+\[\int_a^b \delta(t-c)f(t) dt =\student{ \begin{cases} f(c)& a\leq c\leq b  \\ 0&\text{otherwise}\end{cases}}\]
+}{
+
+
+\tikzplot[\xcoord{0.8}{c}\xcoord{-0.5}{a}, \xcoord{1.5}{b} ]{1.8}{2.2}{.7}{2}{t}{}{
+
+\foreach \xtau in { .01}{
+\draw[ultra thick] (0.8-\xtau,0)--(-8,0) ;
+\draw[ultra thick] (0.8-\xtau, 0.3/\xtau)--(1+\xtau,0.3/\xtau) ;
+\draw[] (0.8-\xtau,0.25/\xtau)--(0.8-\xtau,0) ;
+\draw[] (0.8+\xtau,0.25/\xtau)--(0.8+\xtau,0) ;
+\draw[] (1.55,1.7) node{$\delta(t-c)$};
+\draw[ultra thick] (0.8+\xtau,0)--(6,0) ;
+\draw[black, ultra thick, domain=-2:2.2] plot (\x,0.9*\x^2-0.45*\x^3) node[right, above, xshift=-1em, yshift=2em]{$f(t)$};
+
+}
+}
+
+
+}
+}
+
+\slide[Sketch of ``proof'':]{
+
+\algn{\int_{-\infty}^{\infty}\delta(t-c)f(t) dt &= \int_{-\infty}^{\infty} \left( \lim_{\tau \to 0} \delta_{\tau}(t-c)\right) f(t) dt\\
+&=\lim_{\tau \to 0}  \int_{-\infty}^{\infty}  \delta_{\tau}(t-c) f(t) dt\\
+&=\lim_{\tau \to 0}  \frac{1}{2\tau}\int_{c-\tau}^{c+\tau}f(t)dt\\&=\lim_{\tau \to 0} \frac{F(c+\tau)-F(c-\tau)}{2\tau} =f(c)
+}
+}
+
+\slide[Laplace transform of $\delta(t)$]{
+Integrating against $\delta(t-c)$ essentially "selects" the value of the integrand at $t=c$\vfill
+Assuming $c>0$
+\student{
+\algn{\ucover{\lap{\delta(t-c)}=} & \lapint{\delta(t-c) }\\
+=&\int_{-\infty}^{\infty} e^{-st} \delta(t-c) dt =e^{-sc}}
+}
+Special case: $c=0$
+\student{\algn{\ucover{\lap{\delta(t)}=\lim_{c \to 0^+}  \lap{\delta(t-c)}} =  \lim_{c \to 0^+}  e^{-sc} = 1 }}
+
+}
+\subsection{Example}
+
+\slide[Solve: \hfill $y\pp+6y\p+45y=6\delta(t-5)$ \hfill with $\larray{y(0)=0\\y\p(0)=0}$]{\vspace{-2em}\student{
+\algn{
+ (s^2+6s+45)Y(s)&= 6e^{-5s} \quad \Rightarrow \quad Y(s) = e^{-5s} \cdot\underbrace{\frac{6}{\underbrace{s^2+6s+45}_{(s+3)^2+36}}}_{\lap{e^{-3t}\sin(6t)}} \intertext{by the convolution theorem}
+y(t) &= \delta(t-5) \ast \underbrace{ e^{-3t} \sin \left( 6t \right)}_{f(t)}\\
+&=\int_0^t  f(t-\tau) \delta(\tau-5)d\tau\\
+&=\begin{cases} 0 & t < 5 \\
+f(t-5) &t\geq 5\end{cases}\\
+&=u(t-5)f(t-5)
+}  
+}
+}
+\subsection{Notes on Dirac Delta}
+\slide[Delta Dirac ``Function'': $\delta(t) \approx \lim_{\tau \to 0} \delta_\tau (t) $]{
+\itmz{ \item \alert{Note:} $\delta(t)$ is not really well-defined in the conventional sense 
+\subitem{It is a "generalized" function with the three following properties: \vfill
+\enum{\item $\delta(t)=0$ for $t\neq0$ \vfill  - $\delta_\tau(0) $ D.N.E. in the limit $\tau \to 0$,  which is problematic.\vfill
+- Rather than its value, this ``function'' is defined via integral properties \vfill\item $\int_{-\infty}^{\infty} \delta(t) dt =1$ 
+\item $\int_a^b \delta(t-c)f(t) dt = \begin{cases} f(c)& a\leq c\leq b  \\ 0&\text{otherwise}\end{cases} $ }
+}\vfill
+\item The delta function acts like an intense pulse of unit strength. 
+\subitem{This is also called an \alert{impulse}: \subitem {An action that happens arbitrarily  fast but with finite magnitude.
+ \item ex: accelerating a golf ball with a golf club}}\vfill
+
+
+}
+
+}
+
+\end{document}

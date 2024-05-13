@@ -8,7 +8,8 @@
 
 \begin{document}
 
-\section{MATH 215/255}
+\section{MATH 256}
+\subsection{Introduction}
 \slide[Land Acknowledgement]{\vfill
 UBC's Point Grey Campus is located on the traditional, ancestral, and unceded territory of the Musqueam. The land it is situated on has always been a place of learning for the Musqueam people, who for millennia have passed on culture, history, and traditions from one generation to the next. I encourage you to learn more at UBC's Indigenous Portal, \url{http://indigenous.ubc.ca}, and on the Musqueam's website, \url{http://musqueam.bc.ca}.\vfill
 }
@@ -18,18 +19,27 @@ UBC's Point Grey Campus is located on the traditional, ancestral, and unceded te
 \begin{itemize}
 \item \textbf{My name:} Laurent MacKay (he/him/his)
 \item \textbf{Position:} Postdoctoral Research Fellow \subitem{\textbf{My research:} Mathematical Biology (applied differential equations)}
-\item \textbf{Office (student) hours:} TBD: \url{https://www.when2meet.com/?21070285-YbEHX}
-\item \textbf{Contact:} Canvas messaging system or email: lmackay@math.ubc.ca
+\item \textbf{Office (student) hours:} TBD: \url{https://www.when2meet.com/?22890274-2QF6r}
+\item \textbf{Contact:} Canvas messaging system or email: \url{mailto:lmackay@math.ubc.ca}
 \end{itemize}
 \vfill
+}
+\slide[Who are you?]{
+\itmz{ \item Primarily Engineering Undergrads$\dots$\vfill
+\subitem{Computer? \item Electrical? \item Chemical and Biological? \item Civil? \item Environmental? \item Other?
+} \vfill}
 }
 \subsection{Syllabus Overview}
 \slide[What will we learn?]{
 \vfill
-How to solve Ordinary Differential Equations!
+Analytical methods for solving Differential Equations (DEs) and some example applications (mass-spring systems, circuits, heating/cooling, etc.)\vfill
+
 \begin{itemize}
-\item Analytically
-\item Numerically with MATLAB
+\item Ordinary Differential Equations (ODEs) - one independent variable\vfill
+\subitem{Fancy Integration (separable equations, method of integrating factors) \item Educated Guessing (ansatz method, method of undetermined coeffs.) \item Laplace Transforms \item Fourier Series (periodic solutions) }
+\vfill
+\item Partial Differential Equations (PDEs) -  multiple independent variables\vfill
+\subitem{Heat/Diffusion Equation, Wave Equation, Laplace Equation}
 \end{itemize}\vfill
 }
 
@@ -40,65 +50,33 @@ How to solve Ordinary Differential Equations!
 \begin{itemize}
 \item I'll do some exercises, you do others with neighbours (bring something to write with)
 \item Asking questions is encouraged
-\item Weekly quizzes on Wednesdays!
+\item Skeleton and annotated lecture notes are posted on Canvas
+\item Lecture recordings are also posted within 24 hours
 \end{itemize}\vfill
-\item I will post recordings on our Section's Canvas page, along with skeleton and annotated lecture notes \vfill
-\item Check Canvas for important information including textbook, grade breakdown, assignment due dates, and other resources
-
+\item Attend office hours as needed (will be near the math dept.)
+\subitem{Scheduling Poll: \url{https://www.when2meet.com/?22890274-2QF6r} }
+\vfill
+\item Check \textbf{Canvas} for important announcements and \textbf{Piazza} for student-led discussion (WebWork, Assignments, etc.)
 
 \end{itemize}
 
 }
 
-\slide[MATH 215/255: Grade Breakdown]{
-\itmz{ \item 10\% WebWork \subitem{Weekly starting Sep. 19$^{\text{th}}$.}  \vfill \item 5\% MATLAB HW Assignments \subitem{Due with Webworks 1,2,3,5,8, \& 9. \item Also starting Sep. 19$^{\text{th}}$.} \vfill \item 85\% Mastery Score \subitem{First quiz on Sep. 20$^{\tt th}$}}
+\slide[MATH 256: Grade Breakdown]{
+\itmz{ \item 10\% WebWork - 7 Total \subitem{First one due Jan. 18$^{\text{th}}$}  \vfill \item 10\% 2 Written HW Assignments \subitem{Due dates: TBD \item Submitted via: \textbf{Gradescope}} \vfill \item 30\% 2 Midterms \subitem{Weeks of Feb. 5$^{\text{th}}$ and  March 11$^{\text{th}}$ \item One page (front \& back) of notes is permitted.} \vfill \item 50\% Final Exam \subitem{Do not make travel plans in April...}}
 }
 
-\slide[Mastery-Based Grading]{
-\begin{itemize}
-    \item Course is broken down into 16 Learning Outcomes, each of which you will be given the opportunity to demonstrate `Mastery' of throughout the course during:
-    \begin{itemize}
-        \item Weekly in-class quiz (each testing 1-2 Learning Outcomes) \subitem{End of class on Wednesdays}
-        \item In class retest 1 
-        \item In class retest 2 
-        \item Final exam 
-    \end{itemize}\vfill
-    \item Nearly perfect answer =  `Mastery'.
-    \item  On the right track  =  `Progressing'
-\item Very incomplete answer =`Beginning'
-\end{itemize}\vfill
-Your final Mastery Score is the percentage of Learning Outcomes that you have scored `Mastery' on by the end of the course.
-
-
-}
-
-\slide[Advantages/Disadvantages of Mastery-Based Grading]{
-\itmz{\item Pros:
-\subitem{  If you do well on all the weekly quizzes you don't have to write either In class retests or the Final exam
-        \item You control your grade and can earn the grade you want
-        \item Your grade will never go down}\vfill
-\item Things to watch out for:
-\subitem{Study for the weekly quizzes! You won't have time to obtain `Mastery' on all the Learning Outcomes during the In class retests or Final exam, so you want to obtain 'Mastery' on at least some of them during the quizzes
-        \item You can't get by on part marks, you actually have to know how to solve a problem to obtain a `Mastery' score on a Learning Outcome
-}
-}
-}
-
-
-\subsection{Get MATLAB}
-\slide[For next class...you will need access to MATLAB]{
+\slide[Textbooks \& Resources]{
+\itmz{
+\item Diffy Qs: Free online text, quite good
+\subitem{\url{https://www.jirka.org/diffyqs/html/diffyqs.html}}
 \vfill
-\enum{
-\item Create a MathWorks account
-\subitem{Go to \href{https://matlab.mathworks.com}{matlab.mathworks.com}
-\item Click "No account? Create one!"
-\item Enter your UBC email address and follow the instructions
-\subitem{You can obtain one from  \uline{\href{https://www.myaccount.ubc.ca/myAccount/}{here}} using "Activate Student Email"}
-\item Note it may take a few hours to activate your MathWorks account}\vfill
-\item Use MATLAB Online
-\subitem{Go to  \href{https://matlab.mathworks.com}{matlab.mathworks.com}
-\item Sign in with your UBC email address and MathWorks password}
-}\vfill
+\item Paul's Online Math Notes 
+\subitem{\url{https://tutorial.math.lamar.edu/classes/de/de.aspx} \item Excellent free resource, better solutions than Diffy Qs.}
+\vfill
+\item  Boyce and Diprima: Optional Hardcopy, also good
+\subitem{\url{https://www.google.com/search?q=boyce+and+diprima+elementary+differential+equations+and+boundary+value+problems}}
+}
 }
 
 \end{document}

@@ -1,0 +1,245 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+\usetikzlibrary{arrows}
+
+\begin{document}
+\section{Lecture 19}
+\subsection{Preamble}
+\settoggle{covered}{true}
+
+\slide[\begin{minipage}{0.7\textwidth}Intro to Linear Systems:  Skydiving\end{minipage}\begin{minipage}{0.3\textwidth}{\hspace{5.25em}\includegraphics[height=.75cm]{images/airplane.pdf}}\end{minipage}]{  \begin{minipage}{0.6\textwidth} \vspace{-2em} Newton's 2$^{\text{nd}}$ Law: \end{minipage} \begin{minipage}{0.2\textwidth}\centerline{ \includegraphics[width=2cm]{images/skydiver_solo.pdf}} \end{minipage} \hfill \vspace{-2em}\algn{ &ma = F(t)  = -mg - \mu v \intertext{noting that $a=x''$ and $v=x'$, we can rewrite this as}
+ & \left. x'' + \frac{\mu}{m} x' = -g \quad  \right\} \text{2$^{nd}$ order ODE, one unknown function}}
+\student{
+or equivalently, \algn{  & \left. \begin{array}{c l}   x' &=v \\v' &= - \frac{\mu}{m} v-g\end{array}\right\} \text{1$^{st}$ order ODEs, two unknown functions}}
+\vfill
+Q: How do we find two unknown functions simultaneously?
+}
+
+}%end sldie
+
+
+
+\slide[Linear Systems of DEs: Matrix Notation]{
+
+\[ \text{$x\rightarrow x_1$, $v\rightarrow x_2$} \quad  \Rightarrow \quad \begin{array}{c l}  x_1' &=x_2\\x_2' &= - \frac{\mu}{m} x_2-g \end{array}\]
+\student{
+Using matrix notation:
+\algn{ \dd{}{t}\mat{c}{x_1\\ x_2}  &= \mat{cc}{0&1\\0&-\frac{\mu}{m} }\mat{c}{x_1\\x_2} +\mat{c}{0\\g}\\\\
+&=\mathbf{A} \vec{x} + \text{constant vector}
+}
+\vfill}
+
+}
+
+\slide[Linear Systems of DEs: Matrix Notation]{
+
+General Linear System IVP:\[\dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x} +\vec{f}(t) \quad\text{with} \quad \vec{x}(t_0)=\vec{x}_0\]
+where $\mathbf{A}$ is an $n\times n$ matrix, and both $\vec{x}$ and $\vec{f}$ are $n\times1$ column vectors.
+\vfill
+\student{
+Operator Form:
+\algn{\dd{}{t}\vec{x} - \mathbf{A}(t) \vec{x}& = \vec{f}(t)\quad\text{with} \quad  \vec{x}(t_0)=\vec{x}_0\\
+\op{\vec{x}} &= \vec{f}(t) }\vfill
+\centerline{$\vec{f}(t)=\vec{0} \qquad \Rightarrow \qquad $homogeneous system}
+}
+
+}
+
+\subsection{Converting between representations}
+\slide[Equivalence of problems]{
+For every $n^{th}$ order linear ODE, there is a corresponding system of $n$ 1$^{st}$ order linear ODEs.\vfill
+\student{
+\[a_n(t)x^{(n)}(t)+a_{n-1}(t)x^{(n-1)}(t) + \dots + a_0(t)x(t) = h(t)\]
+can be expressed as 
+\[\dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x} +\vec{f}(t)\]
+with \[\vec{x}(t)=\mat{c}{x\\x\p \\ \vdots \\ x^{(n-1)}}\]
+}
+}
+
+\slide{
+\ex{Rewrite $x'''+x'+x = t^2$ in the form $\dd{}{t}\vec{x} = \mathbf{A}\vec{x} + \vec{f}(t)$}\vfill
+\student{\algn{\vec{x}&=\mat{c}{x_1\\x_2\\x_3} \quad \carray{x_1=x\\ x_2=x\p\\x_3=x\pp} \qquad\qquad \dd{}{t}\vec{x} =\mat{c}{x\p\\x\pp\\x'''} =  \mathbf{A}\vec{x} + \vec{f}(t)\\
+x\p&=x_2\\
+x\pp&=x_3\\
+x'''&=-x -x\p+t^2\\
+&=-x_1-x_2+t^2\\\\
+ \dd{}{t}\vec{x}&=\mat{c}{x_1'\\x_2'\\x_3'} =\mat{c}{x\p\\x\pp\\x'''} = \underbrace{ \mat{ccc}{0&1&0\\0&0&1\\-1&-1&0}}_{\mathbf{A}} \mat{c}{x_1\\x_2\\x_3} \ + \underbrace{ \mat{c}{0\\0\\t^2}}_{\vec{f}}\\
+}
+}
+}
+
+
+\subsection{Finding solutions}
+
+\slide[Skydiving: Homogeneous Solutions ]{
+Suppose we want to solve $v\pp+\frac{\mu}{m}v\p=0$
+\student{Guess $v(t)=e^{rt}$
+\algn{r^2+\frac{\mu}{m}r &=0 &
+r\left(r+\frac{\mu}{m}\right) &=0 \\ &r=0, -\frac{\mu}{m} 
+&v(t) &= c_1+c_2e^{ -\frac{\mu}{m}t}\\
+&&=c_1y_1(t) + c_2y_2(t)
+}\vfill
+What about for the vector expression?\vfill
+\centerline{two LI homogeneous solutions $\quad \rightarrow \quad $ two LI vectors}\vfill
+\algn{\vec{x}(t)  &=c_1 \mat{c}{1\\0} +c_2 e^{-\frac{\mu}{m} t} \mat{c}{1 \\ -\frac{\mu}{m}}\\\\
+&=c_1\vec{x}_1(t) \;\;\;+\quad c_2\vec{x}_2(t) }
+}
+}
+
+
+
+
+\slide[Homogeneous Problem and Superposition]{\vspace{-1em}
+Suppose $\vec{x}_1(t), \;\vec{x}_2(t),\;\dots, \;\vec{x}_k(t)$ all solve the homogeneous problem \[\dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x} \]\vfill
+Then \[\vec{x}(t) = c_1\vec{x}_1(t)+c_2\vec{x}_2(t)+\dots+c_k\vec{x}_k(t)\]
+also solves the same homogeneous problem.
+\vfill
+\student{
+\algn{\dd{}{t}\vec{x} &= \sum_{i=1}^nc_i\dd{}{t}\vec{x}_i= \sum_{i=1}^nc_i \mathbf{A}(t) \vec{x}_i \\& =  \mathbf{A}(t)  \sum_{i=1}^nc_i\vec{x}_i \\
+&=\mathbf{A}(t)\vec{x}(t)}
+}
+}
+
+
+\slide[Homogeneous Problem and Superposition]{\vspace{-1em}
+Suppose $\vec{x}_1(t), \;\vec{x}_2(t),\;\dots, \;\vec{x}_k(t)$ all solve the homogeneous problem \[\dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x} \]
+\vspace{-2em}
+
+Then the set of solutions \[ \left\{\vec{x}_1(t), \vec{x}_2(t), \dots,\vec{x}_k(t)\right\}\]
+form a vector space $V$.
+\vfill
+\student{
+Since we are using ``standard'' addition/multiplication we only need to check 2 properties\vfill
+\enum{
+\item Additive Closure\[\vec{x}_i+\vec{x}_j \in V \quad \checkmark \]
+\item Scalar Closure:\\
+For any constant c
+\[c \vec{x}_j \in V \quad \checkmark \]
+}
+}
+}
+
+\slide[Homogeneous Problem and Superposition]{\vspace{-1em}
+Suppose $\vec{x}_1(t), \;\vec{x}_2(t),\;\dots, \;\vec{x}_k(t)$ all solve the homogeneous problem \[\dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x} \]
+\vspace{-2em}
+
+Then the set of solutions \[ \left\{\vec{x}_1(t), \vec{x}_2(t), \dots,\vec{x}_k(t)\right\}\]
+form a vector space $V$.\vfill
+\hrule
+\vspace{.5em}
+If $\mathbf{A}$ is $n\times n$, and we can find $n$ linearly independent solution vectors (i.e., $k=n$), then we have a solution basis. 
+\vfill
+That is, \uline{any} solution $\vec{x}(t)$ can be written as 
+\student{\[\vec{x}(t) = c_1\vec{x}_1(t)+c_2\vec{x}_2(t)+\dots+c_n\vec{x}_n(t)\]}\small
+See DiffyQs Appendixes A.4 \& A.5 for review of vector spaces and bases.
+}
+
+
+\slide[Finding the solution vectors $\vec{x}_i$]{
+Given
+\[\dd{}{t}\vec{x} = \mathbf{A} \vec{x},\]
+we want to find one of its solution vectors.\vfill
+\student{
+For a scalar equation, if we have $y\p=ay$ then we know the solution is $y=ce^{at}$.
+\vfill
+Lets guess $\vec{x}(t)=e^{\lambda t}\vec{v}$, and plug it into the ODE
+\algn{\lambda e^{\lambda t} \vec{v} &=  \mathbf{A} e^{\lambda t} \vec{v}\\
+\lambda \vec{v} &= \mathbf{A} \vec{v}}
+\vfill
+$\vec{v}$ is an eigenvector of $\mathbf{A}$, and $\lambda$ is its associated eigenvalue.
+}
+}
+
+\slide[Eigenvectors/Eigenvalues]{
+
+
+\itmz{\item A $n \times n$ matrix has $n$ eigenvalues and eigenvectors \subitem{except in some special cases}
+}\vfill
+\student{
+Ignoring those special cases for now, we can write any homogeneous solution as
+
+\[\vec{x}(t) = c_1 e^{\lambda_1t}\vec{v}_1+c_2e^{\lambda_2 t}\vec{v}_2+\dots+c_ne^{\lambda_n t}\vec{v}_n\]
+where $\vec{v}_i$ is the eigenvector associated with the eigenvalue $\lambda_i$.
+\vfill
+
+}\vspace{3em}
+See DiffyQs \S 3.7 for details on those special cases.
+}
+
+\slide[Eigenvectors/Eigenvalues]{
+
+
+\itmz{\item A $n \times n$ matrix has $n$ eigenvalues and eigenvectors \subitem{except in some special cases}
+}\vfill
+We want to find values $\lambda$ such that for some non-zero $\vec{v}$\[\mathbf{A}\vec{v} = \lambda \vec{v}\]
+\student{
+Rearrange as
+\[(\mathbf{A} - \lambda \mathbf{I}) \vec{v} = \vec{0}\]
+If $(\mathbf{A} - \lambda \mathbf{I})^{-1}$ exists, then \[\vec{v} =(\mathbf{A} - \lambda \mathbf{I})^{-1} \vec{0} = \vec{0} \]
+So we need 
+ \[\det(\mathbf{A} - \lambda \mathbf{I}) = 0\]
+
+}\vspace{3em}
+See DiffyQs \S A.6 for a review of determinants
+}
+
+
+\slide[Eigenvectors/Eigenvalues]{
+\itmz{\item A $n \times n$ matrix has $n$ eigenvalues and eigenvectors \subitem{except in some special cases}
+\item The eigenvalues are obtained from the roots of the characteristic polynomial obtained from   \[\det(\mathbf{A} - \lambda \mathbf{I}) = 0,\] where "det" is short for "determinant" and $\mathbf{I}$ is the $n \times n$  identity matrix
+\item  The eigenvectors are computed by solving the linear system  \[(\mathbf{A} - \lambda \mathbf{I}) v= 0\] once each of the eigenvalues $\lambda$ is found.
+\item the eigenvectors are not unique, defined up to arbitrary mulitplicative constant
+}
+}
+\settoggle{covered}{false}
+\slide[Find the eigenvalues/vectors associated with \hfill \small $\larray{ \dd{x}{t} = -3x - 2y \\ \dd{y}{t} = -2x - 6y}$]{\vspace{-1.5em}
+\student{\algn{\dd{}{t} \mat{c}{x\\y}  &= \mat{cc}{-3&-2\\-2&-6} \mat{c}{x\\y} \\ \det\left(  \mat{cc}{-3-\lambda&-2\\-2&-6-\lambda} \right) &= 0\\
+(3+\lambda)(6+\lambda) - 4 &=0\\
+\lambda^2 +9\lambda + 18 - 4 &= 0\\
+ \lambda^2 +9\lambda + 14 &= 0\\
+\lambda &= \frac{-9 \pm \sqrt{81 - 4\cdot 14}}{2}=\frac{-9 \pm \sqrt{81 - 56}}{2}\\
+&=\frac{-9 \pm \sqrt{25}}{2}=\frac{-9\pm5}{2} \\
+\lambda_{1,2} &= -2, -7}
+}
+}
+\slide[Find the eigenvalues/vectors associated with \hfill \small $\larray{ \dd{x}{t} = -3x - 2y \\ \dd{y}{t} = -2x - 6y}$]{\student{\vspace{-2em}
+\algn{\uline{\lambda_1=-2:}\quad \mathbf{A} \vec{v}_1 &= -2 \vec{v}_1 & (\mathbf{A}+2\mathbf{I})\vec{v}_1 & = \vec{0}\\\\
+ \mat{cc}{-1&-2\\-2&-4} \vec{v}_1 &= \vec{0} \qquad  & \uline{\text{Augmented matrix:}}\quad &  \mat{cc|c}{-1&-2 &0\\-2&-4&0}
+\intertext{row 2 and row 1 are linearly dependent: $R_2-2R_1\rightarrow R_2$}
+& \mat{cc|c}{-1&-2 &0\\0&0&0} &-1x-2y&=0\\
+&&x&=-2y\\
+\vec{v}_1&=\mat{c}{-2\\1}&\vec{x}_1(t)&=\mat{c}{-2\\1}e^{-2t}
+}
+}
+}
+
+\slide[Find the eigenvalues/vectors associated with \hfill \small $\larray{ \dd{x}{t} = -3x - 2y \\ \dd{y}{t} = -2x - 6y}$]{\student{\vspace{-2em}
+\algn{\uline{\lambda_2=-7:}\quad \mathbf{A} \vec{v}_2 &= -7\vec{v}_2 & (\mathbf{A}+7\mathbf{I})\vec{v}_2 & = \vec{0}\\\\
+ \mat{cc}{4&-2\\-2&1} \vec{v}_2 &= \vec{0} \qquad  & \uline{\text{Augmented matrix:}}\quad &  \mat{cc|c}{4&-2 &0\\1&-4&0}
+\intertext{row 2 and row 1 are linearly dependent: $R_2+2R_1\rightarrow R_2$}
+& \mat{cc|c}{4&-2 &0\\0&0&0} &4x-2y&=0\\
+&&x&=y/2\\
+\vec{v}_2&=\mat{c}{1\\2}&\vec{x}_2(t)&=\mat{c}{1\\2}e^{-7t}
+}
+}
+}
+
+
+
+\slide[Summary]{
+\itmz{
+\item Linear $n^{th}$ order DEs can be converted to a system of $n$ 1$^{st}$ order DEs\vfill
+\item Homogeneous system:  $\dd{}{t}\vec{x} = \mathbf{A}(t) x$
+\subitem{Need to find $n$ linearly independent solutions $\left\{ \vec{x}_1(t), \;\vec{x}_2(t),\;\dots, \;\vec{x}_n(t) \right\} $
+\item These solution vectors are based on the eigenvectors/eigenvalues of $\mathbf{A}$ \item$\vec{x}_i(t) = e^{\lambda_i t}\vec{v}_i$}
+\vfill
+\item Finding eigenvalues/eignevectors, we need to solve    \[\det(\mathbf{A} - \lambda \mathbf{I}) = 0\quad\text{and}\quad (\mathbf{A} - \lambda \mathbf{I}) v= 0\]
+}
+}
+
+
+
+\end{document}
+

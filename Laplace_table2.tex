@@ -1,0 +1,26 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+\section{Laplace Transform Table}
+\begin{document}
+
+
+\slide[]{
+For any constants $C$, $a$, $\omega$, and $k\in \mathbb{N}$ we have the Laplace Transforms of the following functions $y(t)$:
+\algn{y(t)&=C&\lap{C}&=\frac{C}{s}&\text{Constant}\\
+y(t)&=e^{at}&\lap{e^{at}}&=\frac{1}{s-a}&\text{Exponential Function}\\
+y(t)&=\cos(\omega t)&\lap{\cos{\omega t}}&=\frac{s}{s^2+\omega^2}&\text{Cosine}\\
+y(t)&=\sin(\omega t)&\lap{\sin{\omega  t}}&=\frac{\omega}{s^2+\omega^2}&\text{Sine}\\
+y(t)&=t^k&\lap{t^k}&=\frac{k!}{s^{k+1}}&\text{Power Function}\\
+y(t)&=e^{at}f(t)&\lap{e^{at}f(t)}&=F(s-a)&\text{First Shift Theorem}\\
+y(t)&=t^kf(t)&\lap{t^kf(t)}&=(-1)^k\ddn{}{s}{k}F(s)&\text{Resonance}
+}
+\vfill
+\hrule
+\vfill
+$\lap{y'}=sY(s)-y(0)$\hfill$\lap{y''} = s^2Y(s)-sy(0)-y'(0)$
+}
+
+\end{document}

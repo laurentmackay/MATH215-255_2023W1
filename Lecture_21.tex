@@ -1,0 +1,92 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+\usetikzlibrary{arrows}
+
+\begin{document}
+\section{Lecture 21}
+\subsection{Preamble}
+
+\slide[Recall: Eigenproblem  for $2\times2$ Linear Systems of ODEs]{
+\[\dd{}{t} \vec{x} = \mat{cc}{a&b\\c&d}\vec{x}\]
+\vfill
+\[\det\left(\mat{cc}{a-\lambda&b\\c&d-\lambda}\right)=0  \quad \Leftrightarrow  \quad \lambda^2-(a+d)\lambda + ad - bc=0\]\vfill
+\[\lambda = \frac{(a+d)\pm\sqrt{(a+d)^2-4(ad-bc)}}{2} \]
+\vfill
+Three possibilites:
+
+\enum{
+\item 2 distinct real eigenvalues/vectors \checkmark
+\item A  complex conjugate pair  of eigenvalues/vectors \checkmark
+\item  One eigenvalue is repeated, only one eigenvector (To Do)
+}
+}
+
+\subsection{Repeated Eigenvalue}
+
+
+\slide{\ex{Find the general solution to $\dd{}{t}\vec{x}=\mat{cc}{1 & -1 \\ 1 &3}\vec{x}$} \vspace{-.5em}
+\textcolor{\studentcolor}{\algn{\det \mat{cc}{1-\lambda & -1\\1&3-\lambda}=\lambda^2-4\lambda+4&=0\\\paren{\lambda-2}^2&=0\\\lambda&=2&\text{repeated eigenvalue}}
+We can find one fundamental solution from the eigenvector $\vec{v}$}
+
+\student{
+\algn{\ (\mathbf{A}-2\mathbf{I} )\vec{v}&=\vec{0}&\mathbf{A}-2\mathbf{I} &= \mat{cc}{-1&-1\\1&1}\\
+\text{Augmented matrix:}& \mat{cc|c}{-1&-1&0\\1&1&0}&\rightarrow&\quad  \mat{cc|c}{0&0&0\\1&1&0}\\
+v_1 +v_2&=0&\vec{v}&=\mat{c}{1\\-1}\\
+\text{so }\vec{x}_1(t) &=e^{2t}\colvec{1\\-1}}
+}
+}
+
+\slide[Finding the ``extra'' fundamental solution with repeated $\lambda$]{
+\vspace{-1em}
+
+Guess $\vec{x}_2(t)=\paren{\vec{w}+t\vec{u}}e^{\lambda t}$,  where $ \vec{w}$  and  $\vec{u}$  are constant vectors
+
+ \vspace{1em}
+
+ \student{Plug guess into ODE:
+ 
+ \vfill
+\algn{\text{\uline{ODE:}} \quad \dd{}{t}\vec{x}_2 &= \mathbf{A} \vec{x}_2 \\
+\dd{}{t}\vec{x}_2& = \lambda \vec{w}e^{\lambda t}+\vec{u}e^{\lambda t}+\lambda\vec{u}te^\lambda t\\
+\text{\uline{ODE:}} \quad  \lambda \vec{w}+\vec{u} +\lambda \vec{u}t &= \mathbf{A}\vec{w} + t \mathbf{A}\vec{u} \intertext{group by powers of $t$}
+\uline{ t^1}: \quad \mathbf{A}\vec{u}&=\lambda \vec{u} \qquad  \Rightarrow \quad \vec{u}=\text{the eigenvector} \\\\
+\uline{t^0}: \quad \mathbf{A}\vec{w}&=2\vec{w}+\vec{u} &\\
+\paren{\mathbf{A}-\lambda \mathbf{I}}\vec{w}&=\vec{u} \qquad  \Rightarrow \quad \vec{w}=\text{a generalized eigenvector}\\ }
+}
+}
+
+\slide{\ex{Find the general solution to $\dd{}{t}\vec{x}=\mat{cc}{1 & -1 \\ 1 &3}\vec{x}$} 
+\vspace{-0.5em}
+ \algn{\text{We have} \quad \vec{x}_1(t) &=e^{2t}\colvec{1\\-1} &\text{and} \quad  \vec{x}_2(t)&=\left( \vec{w}+t \colvec{1\\-1} \right) }
+\student{
+We know
+\algn{(\mathbf{A}-2\mathbf{I})\vec{w}&=\colvec{1\\-1}\qquad \qquad \text{Aug. Matrix:}\quad  \mat{cc|c}{-1& -1&1\\1&1&-1}\\
+ \rightarrow &\mat{cc|c}{-1& -1&1\\0&0&0}  \qquad \qquad \Rightarrow -w_1-w_2=1\\
+\qquad w_2&=-1-w_1\\
+\vec{x}_2(t)&=e^{2t}\left( \colvec{1\\0}+t\colvec{1\\-1} \right) \qquad \qquad \vec{w}=\colvec{1\\-2} }
+\[ \vec{x}=c_1e^{2t}\colvec{1\\-1}  + c_2e^{2t} \left( \colvec{1\\-2}+t\colvec{1\\-1} \right) \]
+}
+}
+
+\slide[Note: Repeated Eigenvalues]{
+The diagonal matrix \[\mat{cc}{a&0\\0&a}\]
+has a repeated eigenvalue $\lambda=a$, with two eigenvectors \[\vec{v}_1=\colvec{1\\0} \quad \text{and} \quad \vec{v}_2=\colvec{0\\1}. \]
+\vfill
+Generally, if the char. poly has a factor \[(\lambda-a)^m=0\]
+then the eigenvalue has \uline{algebraic multiplicity} $m$.\vfill
+If we can find $k$ eignevectors, the \underline{geometric multiplicity}  of $\lambda$  is $k$.\vfill
+}
+\slide[Note: Defective Eigenvalues]{
+
+Generally, if the char. poly has a factor \[(\lambda-a)^m=0\]
+then the eigenvalue has \uline{algebraic multiplicity} $m$.\vfill
+If we can find $k$ eignevectors, the \underline{geometric multiplicity}  of $\lambda$ is $k$.\vfill
+We say an eigenvalue  $\lambda$ is \uline{defective} if $k<m$. \hfill \ex{$\lambda = 2 $ for $\mat{cc}{1 & -1 \\ 1 &3}$}
+\vfill
+\student{We can find $m-k$ \alert{generalized eigenvectors} recursively by solving
+\[(\mathbf{A}-\lambda I)\vec{w}_n = \vec{w}_{n-1} \quad\text{for } n=1,\dots, m-k\] where $\vec{w}_0$ is the ordinary eigenvector for $\lambda $}
+}
+
+\end{document}

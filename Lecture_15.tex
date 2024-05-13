@@ -1,0 +1,153 @@
+\input{notes.tex}
+
+\usetikzlibrary{arrows}
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+
+\begin{document}
+
+\section{Lecture 15}
+\subsection{Preamble}
+\slide[Laplace Transform of an IVP]{
+Given 
+\[ay''+by'+cy=f(t)\quad y(0)=y_0, y'(0)=v_0\]
+we want to find $Y(s)$.
+\vfill
+\student{
+\algn{\lap{ay''+by'+cy} &= \lap{f(t)}\\
+a\lap{y''}+b\lap{y'}+cY(s)&=F(s) }\vfill
+In order to isolate $Y(s)$, we need to be able to compute $\lap{y'}$ and $\lap{y''}$.
+}
+
+}
+
+\subsection{Derivative Rules}
+
+
+\slide[Laplace Transform of Derivatives]{
+Suppose $\lap{y(t)}=Y(s)$. What is $\lap{y\p(t)}?$\vfill \student{
+\algn{\lap{y\p(t)}&=\int_0^\infty \underbrace{e^{-st}}_{u} \underbrace{y\p(t)dt}_{dv} &\arr{l}{v=y(t)\\du=-se^{-st}dt} \\
+&=e^{-st}y(t)\evalat{0}{\infty}-(-s)\underbrace{\lapint{y(t)}}_{\lap{y(t)}}\\
+&\overset{s>0}{=} - y(0)+s\lap{y(t)} \\\\&=  \boxed{sY(s)-y_0} } 
+}\vfill
+}%end slide
+
+\slide[Laplace Transform of Derivatives]{
+Given that $\lap{y\p(t)}=sY(s)-y_0$. What is $\lap{y\pp(t)}?$ \student{
+\vfill
+\algn{
+\lap{y\pp(t)}&= s\lap{y\p(t)} - y\p(0)=s\left[ sY(s)-y_0 \right] -\underbrace{y\p(0)}_{v_0}\\\\
+&=\boxed{s^2Y(s)-sy_0-v_0}}
+}\vfill
+}%end slide
+
+\slide[Laplace Transform of an IVP]{
+Given 
+\[ay''+by'+cy=f(t)\quad y(0)=y_0, y'(0)=v_0\]
+we want to find $Y(s)$.
+\vfill
+\student{
+\algn{\ucover{a\lap{y''}+b\lap{y'}+cY(s)}&\ucover{=F(s)}\\
+a(s^2Y(s)-sy_0 -v_0)+b(s Y(s) -y_0)+cY(s) &=F(s)\\\\
+\underbrace{(as^2+bs+c)}_{\text{char. poly.}}Y(s)  = F(s)+(as+b)&y_0 +av_0\\\\
+\boxed{Y(s) = \frac{F(s)+(as+b)y_0 +av_0}{as^2+bs+c}}&
+}
+}\vfill
+}
+
+
+\subsection{Transforming IVPs}
+
+
+\slide{\ex{Use Laplace Transforms to solve $y\p+6y=3$  with $y(0)=2$.}\vfill
+\student{
+\algn{(\lap{y\p}+6\lap{y}&=\lap{3}\\
+\lap{y\p}+6\lap{y}&=\frac3s\\
+sY(s)-\underbrace{y(0)}_{2}+6Y(s)&=\frac3s\\
+(s+6)Y(s)&=\frac3s+2\\
+Y(s)&=\frac{3}{s(s+6)}+\frac{2}{s+6}\intertext{This is the example from pg. 8 of lecture 14.}
+y(t)&=\frac12 +\frac32e^{-6t}
+}
+}
+\vfill
+}
+
+\slide{\ex{Solve $y''+6y'+25y=0$  with $\larray{y(0)=0 \\y'(0)=4}$ using Laplace Trans.}\vfill
+\student{
+\algn{s^2Y(s)-s\cancel{y(0)}-y'(0)+6(sY(s)-\cancel{y(0)})+25Y(s)&=0\\
+(s^2+6s+25)Y(s)&=\underbrace{y'(0)}_{4}\\
+Y(s)&=\frac{4}{s^2+6s+25}\intertext{This is the example from pg. 5 of lecture 14.}
+y(t)&=e^{-3t}\sin(4t)
+}
+}
+\vfill
+}
+
+\slide{\ex{Solve $y''+6y'+25y=-8e^{-4t}$  with $\larray{y(0)=0 \\y'(0)=1}$ using Lap. Trans.}\vfill
+\student{
+\algn{s^2Y(s)-s\cancel{y(0)}-y'(0)+6(sY(s)-\cancel{y(0)})+25Y(s)&=\frac{-8}{s+4}\\
+\underbrace{(s^2+6s+25)}_{(s+3)^2+16}Y(s)&=\frac{-8}{s+4}+1 = \frac{s-4}{s+4}\\
+Y(s)=\frac{s-4}{((s+3)^2+16)(s+4)}&\\\\
+\intertext{This is the example from pg. 12 of lecture 14.}\\
+y(t)= e^{-3t} \left( \frac{8}{17} \cos(4t) +\frac{33}{68} \sin(4t) \right) &+ \frac{8}{17} e^{-4t} 
+}
+}
+\vfill
+}
+
+\slide{\ex{Solve $y''-3y'-4y=8e^{4t}$  with $\larray{y(0)=0 \\y'(0)=1}$ using Laplace Trans.}\vfill
+\student{
+\algn{s^2Y(s)-s\cancel{y(0)}-y'(0)-3(sY(s)-\cancel{y(0)})-4Y(s)&=\frac{-8}{s+4}\\
+\underbrace{(s^2-3s-4)}_{(s-4)(s+1)}Y(s)&=\frac{8}{s-4}+1 = \frac{s+4}{s-4}\\
+Y(s)=\frac{s+4}{(s-4)^2(s+1)}&\\
+\intertext{This is the example from pg. 10 of lecture 14.}
+y(t)=\underbrace{ \frac{40}{25} te^{4t}}_{y_p} -\underbrace{  \frac{3}{25} e^{4t} +  \frac{3}{25} e^{-t}}_{y_h}&
+}\vfill
+This is a case with mathematical resonance, where we mulitply our guess for $y_p$ by  $t$.\vfill
+}
+\vfill
+}
+
+\slide[Multiplication by $t$ $\Leftrightarrow$ Differentiation in $s$-domain]{
+\student{\algn{\lap{t^kf(t)} & = \lapint{t^kf(t)}& = \int_0^\infty \underbrace{e^{-st}t}_{-\dd{}{s}e^{-st}} t^{k-1} &f(t) dt\\
+= -\dd{}{s} \int_0^\infty &e^{-st}t^{k-1} f(t) dt & \carray{\text{\tiny repeat same thing}\\ \dots \\ \text{\tiny k-1 more times}} = (-1)^k\ddn{}{s}{k}&F(s)
+\intertext{with k=1}
+\lap{tf(t)}&=-\dd{}{s} F(s) &ex: \lap{t\sin(\omega t)}=&\frac{2 \omega s}{(s^2+\omega^2)^2}\\
+&& \lap{t\cos(\omega t)}=&\frac{s^2-\omega^2}{(s^2+\omega^2)^2}
+}
+}
+}
+\slide{\ex{Solve $y''+4y=4\cos(2t)$  with $\larray{y(0)=0 \\y'(0)=0}$ using Laplace Transforms}\vfill
+\student{
+\algn{s^2Y(s)+4Y(s)&=\frac{4s}{s^2+4}\\
+Y(s) &= \frac{4s}{(s^2+4)^2}  = \underbrace{\frac{2\omega s}{(s^2+\omega^2)^2}}_{\lap{t\sin(\omega t)}} \quad \text{with }\omega=2 \\
+y(t)&=t\sin(2t)
+}\vfill
+}
+}
+
+\slide{\ex{Find the Laplace Tranform of $f(t)=t^2e^{3t}$}
+\vfill
+\student{
+\algn{F(s) &= (-1)^2\ddn{}{s}{2} \lap{e^{3t}}\\
+&=\ddn{}{s}{2} \frac{1}{s-3}\\
+&=\dd{}{s} \frac{-1}{(s-3)^2}\\
+&= \frac{2}{(s-3)^3 }}
+}
+
+}
+
+\slide{\ex{Solve $y''-6y'+9y=e^{3t}$  with $\larray{y(0)=0 \\y'(0)=0}$ using Laplace Transforms}
+\vfill
+\student{
+\algn{\underbrace{(s^2-6s+9)}_{(s-3)^2}Y(s)&=\frac{1}{s-3}\\
+Y(s)& = \frac{1}{(s-3)^2}\\
+y(t) &= \frac12 t^2e^{3t}
+}
+\vfill
+
+}
+
+}
+
+\end{document}

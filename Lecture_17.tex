@@ -1,0 +1,159 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+\usetikzlibrary{arrows}
+\settoggle{covered}{true}
+\begin{document}
+
+\section{Lecture 17}
+
+\subsection{Introduction}
+\slide[Recall: we have always rearranged products as sums]{
+\vfill
+\ex{$Y(s)=\frac{1}{s^2(s^2+1)} \student{= \dfrac{A}{s} + \dfrac{B}{s^2} +\dfrac{Cs+D}{s^2+1} }$}
+\vfill
+After partial fraction decomposition...\vfill
+\student{
+\algn{A=0, B&=1, C=0, D=-1\\
+Y(s) &= \frac{1}{s^2}-\frac{1}{s^2+1}\\&=\lap{t} -\lap{\sin(t)}\\\\
+y(t)&=t-\sin(t) 
+}
+\vfill
+\centerline{It is possible to deal with the product directly!}
+
+}
+}
+\subsection{Convolution Integrals}
+
+\slide[Convolutions]{
+We denote the convolution of two functions $f$ and $g$ by the symbol $f \ast g$, with \[h(t) =(f\ast g)(t) =\int_0^t f(\tau) g(t-\tau) d\tau\]
+\textbf{Convolutions are:} 
+\begin{enumerate}
+    \item Commutative/Symmetric
+    \subitem{ $f*g=g*f$ }
+    \item Linear
+    \subitem{ $f*(g+h)=f*g+f*h$, where $h$ is a function
+    \item $f*(cg)=c(f*g)=(cf)*g$, where $c$ is a constant}
+    \item Associative \subitem{$f*(g*h)=(f*g)*h$}
+\end{enumerate}
+\vfill
+Convolutions are useful for inverting products of Laplace Transforms\\~\\
+
+}
+
+
+\subsection{Convolution Theorem}
+\slide[Convolution Theorem]{\vspace{-.75em}
+If $f(t)=\lapinv{F(s)}$ and $g(t)=\lapinv{G(s)}$ are known functions, then \vfill \[\boxed{ \lapinv{F(s) \cdot G(s)} =f \ast g } = \int _0^t f(\tau) g(t-\tau) d\tau =\int_0^t g(\tau)f(t-\tau)d\tau\]
+
+
+
+\vfill
+or conversely
+\vfill
+\[\boxed{\lap{f \ast g} = F(s) \cdot G(s)}\]
+}
+\slide[Proof of the convolution theorem with $h(t)=f(t) \ast g(t)$]{\vspace{-2em}
+\algn{\lap{h(t)} = \int_0^\infty e^{-st} h(t) dt = \int_{t=0}^\infty  \int _{\tau=0}^t f(\tau) g(t-\tau) e^{-st} d\tau\; dt}
+\threemini[.32]{.3}{.3}{,3}{
+\tikzplot{.1}{3}{.1}{1.75}{\tau}{t}{
+\draw[domain=0:2 ] plot (\x,2*\x/3) node[right, yshift=-.1cm]{$t=\tau$};
+\draw[pattern=horizontal lines, pattern color=\normcolor, thick] (0,0) -- (4,8/3) -- (0, 8/3);
+}}{\[\carray{\text{equivalent areas}\\ \Leftrightarrow\\ \text{switch integration order}}\]}{
+\tikzplot{.1}{3}{.1}{1.75}{\tau}{t}{
+\draw[domain=0:2 ] plot (\x,2*\x/3) node[right, yshift=-.1cm]{$t=\tau$};
+\draw[pattern=vertical lines, pattern color=\normcolor, thick] (0,0) -- (4,8/3) -- (0, 8/3);
+}
+}
+\algn{&= \int_{\tau=0}^\infty  \int _{t=\tau}^\infty f(\tau) g(t-\tau) e^{-st} dt\; d\tau\\
+&=\int_{\tau=0}^\infty f(\tau) e^{-s\tau} \int_{t=\tau}^\infty g(t-\tau) e^{-s(t-\tau)}d\tau\;dt &\text{let }u=t-\tau\\
+&=\underbrace{\int_{\tau=0}^\infty f(\tau) e^{-s\tau} d\tau}_{F(s)} \underbrace{\int_{u=0}^\infty g(u) e^{-su} du}_{G(s)}  &t=\tau\Rightarrow u =0\\
+&=F(s)G(s)}
+
+}
+
+
+\slide{\ex{ $y\pp+y=t \quad \text{with} \quad y(0)=y\p(0)=0$.} \\~\\  Use the convolution theorem to find $y(t)$.\vfill
+
+\student{\algn{s^2Y(s) + Y(s)  &= \frac{1}{s^2}\\
+Y(s)&=\frac{1}{s^2\paren{s^2+1}} =  \frac{1}{s^2} \cdot \frac{1}{s^2+1}=\lap{t^2} \cdot \lap{\sin(t)}\\
+y(t) &= t \ast \sin(t)=\intop_0^t (t-\tau)\sin(\tau) d \tau\\
+&\overset{\text{by parts}}{=} \left[-t \cos (\tau )-\sin (\tau )+\tau  \cos (\tau )\right]_{\tau=0}^t\\
+&=\cancel{-t \cos (t)}-\sin (t)+\cancel{t\cos (t )}+t\cos(0)+\cancel{\sin(0)}+\cancel{0\cos(0)}\\
+&=t-sin(t)
+}
+}\vfill
+}
+
+\slide{\ex{ $y\pp+y=\sin(t)\quad \text{with} \quad y(0)=y\p(0)=0$.} \\~\\  Use the convolution theorem to find $y(t)$. 
+\student{
+\algn{
+s^sY(s)+Y(s) &= \frac{1}{s^2+1}\\
+Y(s) &=  \frac{1}{s^2+1}\cdot  \frac{1}{s^2+1}\\
+y(t) &=\intop_0^t \sin(t-\tau)\sin(\tau) d\tau\\
+&=\intop_0^t  \left(  \sin(t)\cos(\tau) - \cos(t)\sin(\tau)  \right)\sin(\tau) d\tau\\
+&=\sin(t)\intop_0^t \cos(\tau)\sin(\tau) d\tau - \cos(t)\intop_0^t \sin^2(\tau) d\tau 
+}
+}
+
+\vfill
+\small hint: $\sin(\alpha-\beta) = \sin(\alpha)\cos(\beta) - \cos(\alpha)\sin(\beta)$ 
+}
+
+
+\slide{\vspace{-1.85em}
+\[ y(t)=\sin(t)\intop_0^t \cos(\tau)\sin(\tau) d\tau - \cos(t)\intop_0^t \sin^2(\tau) d\tau\]
+\vspace{-1.75em}
+\student{
+\algn{
+y(t)&=\frac{\sin(t)}{2}\intop_0^t \sin(2\tau) d\tau - \frac{\cos(t)}{2}\intop_0^t (1-\cos(2\tau)) d\tau\\
+&=-\frac{\sin(t)}{4} \left[\cos(2\tau) \right]_{\tau=0}^t - \frac{\cos(t)}{2} \left[ \tau-\frac{\sin(2\tau)}{2} \right]_{\tau=0}^t\\
+&=-\frac{\sin(t)(\cos(2t) -1)}{4}-\frac{t\cos(t)}{2}+\frac{\cos(t)\sin(2t)}{4}\\
+&=\frac14\sin(t)-\frac{t}2\cos(t)-\frac14\underbrace{\cos(2t)}_{1-2\sin(t)}\sin(t)+\frac14\underbrace{\sin(2t)}_{2\cos(t)\sin(t)}\cdot \cos(t)\\
+&=\cancel{\frac14\sin(t)}-\frac{t}2\cos(t)- \cancel{\frac14\sin(t)}+\frac24 \cancelto{1}{\left(\sin^2(t) + \cos^2(t)\right)}\sin(t) \\
+&= \frac12 \sin(t) - \frac{t}{2}\cos(t)
+}}
+\vfill
+\small hint: $\cos(\alpha)\sin(\alpha) = \frac12 \sin(2\alpha)$\hfill and \hfill $\sin^2(\alpha)=\frac12 (1-\cos(2\alpha))$ 
+}
+
+\slide{\ex{ $y\pp+y=g(t)\quad \text{with} \quad y(0)=3, \;y'(0)=5$.} \\~\\  Use the convolution theorem to find an general expression for $y(t)$.\vfill
+\student{
+\algn{s^2Y(s)-3s-5+Y(s)&= G(s)\\
+(s^2+1)Y(s) &= G(s)+3s+5\\
+Y(s)&=\frac{G(s)}{s^2+1} + 3\frac{s}{s^2+1} + 5\frac{1}{s^2+1}\\\\
+y(t)&=\sin(t)\ast g(t) + 3\cos(t) + 5 \sin(t)\\
+y(t) & = \underbrace{\intop_0^t \sin(t-\tau) g(\tau) d\tau}_{\text{particular part}} + \underbrace{ 3\cos(t) + 5 \sin(t)}_{\text{homogeneous part}}  }
+\vfill
+\centerline{We can solve whole classes of ODEs at once.}
+
+}
+
+}
+
+\slide{
+The convolution theorem also allows us to solve integro-differential equations. \ex{$y'(t)=e^t+2\intop_0^ty(t-\tau)e^\tau d\tau\quad\text{with}\quad y(0)=0$}
+
+\student{\algn{sY(s) =\frac{1}{s-1} +&2 \lap{\intop_0^ty(t-\tau)e^\tau d\tau} = \frac{1}{s-1} +2 Y(s) \frac{1}{s-1}\\
+\left(s-\frac{2}{s-1}\right) Y(s) &= \frac{1}{s-1} \qquad \Rightarrow \qquad
+\frac{\overbrace{s^2-s-2}^{(s-2)(s+1)}}{\cancel{s-1}} Y(s) = \frac{1}{\cancel{s-1}}\\
+Y(s)&=\frac{1}{(s-2)(s+1)}}}
+\settoggle{covered}{false}
+\student{
+\algn{
+y(t)&=\intop_0^te^{2\tau} e^{-(t-\tau)}d\tau  = e^{-t} \intop_0^t e^{3\tau} d\tau=\frac{e^{-t}}{3}\left[ e^{3\tau}\right]_{\tau=0}^t\\
+&=\frac13\left(e^{2t}-e^{-t}\right)
+}
+}
+}
+\settoggle{covered}{false}
+\slide[Convolution Theorem: Special Case]{
+Let $f(t)$ be an integrable function and $g(t)=1$.
+\algn{\lap{f(t)\ast g(t)}&=F(s)G(s)\\
+\lap{\intop_0^t f(\tau) d\tau}&=\student{F(s)\lap{1}}\\
+&\student{=\frac{F(s)}{s} \qquad \text{or}\qquad \lapinv{\frac{F(s)}{s}} =\intop_0^t f(\tau) d\tau }
+}\ex{Find the inverse Laplace tranforms of $H(s)=\frac{1}{s(s+7)}$}
+\student{\algn{h(t)&=\intop_0^t e^{-7\tau} d\tau=-\frac17\left[ e^{-7\tau}\right]_{\tau=0}^t = -\frac17 \left( e^{-7t} -1 \right)}}
+}
+\end{document}

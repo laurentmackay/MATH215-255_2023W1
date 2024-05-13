@@ -6,40 +6,43 @@
 \begin{document}
 \section{Lecture 9}
 \subsection{Introduction}
-
+\settoggle{covered}{true}
 \slide[Recall: Constant Coefficient Homogeneous 2$^{nd}$ Order ODE]{\vspace{-1em}
 \[ay\pp +by\p+cy=0 \qquad \text{we need 2 linearly independent solutions}\]
-\centerline{Try \uline{ansatz} $y=e^{rt}$ \hspace{3em} $\rightarrow$\hspace{3em}$e^{rt}\cdot \underbrace{(ar^2+br+c)}_{\text{characterisitc polynomial}} = 0$}
+\centerline{Try \uline{ansatz} $y=e^{rt}$ \hspace{3em} $\rightarrow$\hspace{3em}$e^{rt}\times \underbrace{(ar^2+br+c)}_{\text{characterisitc polynomial}} = 0$}
 
 \[r_{1,2} = \frac{-b\pm\sqrt{b^2-4ac} }{2a}\]
 \enum{\item Two distinct real roots: $\underbrace{b^2-4ac}_{\text{discriminant}}>0$ \\$y_h = c_1e^{r_1 t} + c_2 e^{r_2 t}$\vfill
-\item Repeated real roots: discriminant $= 0$  \vfill \item Complex conjugate roots: discriminant $<0$}
+\item Repeated real roots: discriminant $= 0$ \hspace{3em} \student{$r=\frac{-b}{2a}$}  \vfill \item Complex conjugate roots: discriminant $<0$\hspace{2em} \student{$\sqrt{\text{negative \#}}$}}
 }
 
 
 \subsection{Case 2: repeated root}
 
-\slide[Repeated real root ($r_1=r_2=r$)]{
+\slide[Repeated real root ($r_1=r_2=r$) \hfill $y_h=c_1y_1 + c_2y_2$]{
 Straighforward solution \[y_1=e^{rt}\]  with \[r = \frac{-b\pm\sqrt{b^2-4ac} }{2a} = \frac{-b}{2a}\]
+We need another solution that is linearly independent of $y_1$
 \student{
 \vfill
-We need another solution that is linearly independent of $y_1$
+
 \vfill
-Lets try \[y_2=ty_1\]
+Lets try \[y_2=q(t) y_1(t)\]
+Unique choice \[q(t)=Ct \qquad \Rightarrow \qquad y_2(t) = te^{rt}\]
 }
 }
-\slide[Checking $y_2=te^{rt}$]{\vspace{-2em}
-\[ay\pp + by\p+cy=0 \qquad \text{with } b^2-4ac=0 \]
-\centerline{$\Rightarrow r_{1,2}=r=\frac{-b}{2a}$}\vspace{-2em}
-\algn{\text{Try: } y_2 &= te^{rt}\\
-y_2\p &= e^{rt}+rte^{rt}\\
-y_2\pp &= 2 re^{rt} + r^2te^{rt} 
+\slide[Proof that $y_2=te^{rt}$]{\vspace{-2.5em}
+\[ay\pp + by\p+cy=0 \qquad \text{with } b^2-4ac=0\quad \Rightarrow \quad r_{1,2}=r=\frac{-b}{2a} \]
+\centerline{$$}\vspace{-1.75em}
+\algn{\text{Try: } y_2 &= q(t)e^{rt}, \quad 
+y_2\p = q'e^{rt}+rte^{rt} \\
+y_2\pp &= q''e^{rt} + 2rq'e^{rt}+ r^2te^{rt} 
 \intertext{plug these into the ODE}
-&&\student{a\left( 2 re^{rt} + r^2te^{rt}  \right) + b \left( e^{rt}+rte^{rt} \right) + c e^{rt}} &\student{= 0} \\
-&&\student{\left( ar^2 + br + c \right) te^{rt} +\left( 2ar +b \right)e^{rt}} &\student{=0 }
-\intertext{\student{sub in $r=\frac{-b}{2a}}$} 
-&&\student{\underbrace{\left( \cancel{a}\frac{b^2}{4a^{\cancel{2}}} -\frac{b^2}{2a} + c \right)}_{\frac{1}{4a}(4ac-b^2)=0} te^{rt} +\underbrace{\left( \cancel{2a}\frac{-b}{\cancel{2a}} +b \right)}_{0}e^{rt} }&\student{=0} \\
-&&\student{0}&\student{=0 \checkmark}}
+&a\left(  q''e^{rt} + 2rq'e^{rt}+ r^2te^{rt}  \right) + b \left( q'e^{rt}+rte^{rt}\right) + c q e^{rt} = 0 \\
+& a q''e^{rt} +\left( 2ar +b \right)q'e^{rt} +\underbrace{ (ar^2+br+c)}_{\text{char. poly.}=0}qe^{rt} =0 
+\intertext{sub in $r=\frac{-b}{2a}$} 
+&aq''e^{rt} +\underbrace{\left( \cancel{2a}\frac{-b}{\cancel{2a}} +b \right)}_{0}e^{rt} =0 \\
+& aq''e^{rt} = 0 \quad \Rightarrow  \quad  q''=0 \quad \Rightarrow  \quad  q(t) = Ct+D }
+$D=0$ due to linear independence between $y_2$ and $y_1$
 }
 
 \slide[Constant Coefficient Homogeneous 2$^{nd}$ Order ODE]{\vspace{-1em}
@@ -64,24 +67,51 @@ y\p(0)=0&=-2c_1 + c_2(e^{-2t}-2te^{-2t})\evalat{t=0}{} \\&= -4 +c_2 \qquad \Righ
 
 }
 
-\slide[Complex roots ($b^2-4ac<0$)]{
+
+\subsection{Case 3: complex conjugate roots}
+\slide[Review: Complex Numbers]{
+\twomini[.9]{.5}{.5}{
+Square root of a negative number:
+\vfill
+Suppose $w>0$
+\student{
+\algn{\ucover{\sqrt{-w}} & \ucover{=} i\sqrt{w}\\
+i&=\text{imaginary unit}\\\\
+i \times i &= -1}
+}
+\vspace{4em}
+}{
+Suppose $a,b\in \mathbb{R}$\vfill
+Complex Number: $z=a+ib$\\
+Complex Conjugate: $\bar{z} =a-ib $
+
+\student{\algn{\ucover{\frac{z+\bar{z}}{2}} & \ucover{=}  \frac{2a}{2}\; =  a = \text{Re}(z)\qquad \\ \\
+\ucover{\frac{z-\bar{z}}{2i}} & \ucover{=} \frac{2ib}{2i}=  b = \text{Im}(z) \qquad
+}}
+
+\vspace{3em}
+}
+
+}
+\slide[Complex roots ($b^2-4ac<0$ )  \hfill $y_h=c_1y_1 + c_2y_2$]{
 Roots are given by:\algn{r_1&=\lambda + i \mu & \text{where } i =\sqrt{-1} \\
 r_2&=\lambda - i \mu}
 \student{\vspace{-.75em}\[\lambda = \frac{-b}{2a},\qquad \mu =\frac{\sqrt{4ac-b^2}}{2a}\]}\vfill
-The two functions $e^{(\lambda +i\mu )t}$ \& $e^{(\lambda  - i\mu) t}$ are solutions to $ay\pp +by\p+cy=0$.\vfill
+The two functions $y_1=e^{(\lambda +i\mu )t}$ \& $y_2=e^{(\lambda  - i\mu) t}=\bar{y}_1$ are solutions.\vfill
 \student{What is the exponential of a complex number?\vfill Euler's formula:\[e^{\pm i \alpha} = \cos \alpha \pm i \sin \alpha\]}
 
 }
+\settoggle{covered}{false}
 \slide{\vspace{-1.5em}
 \student{
-\algn{e^{(\lambda  \pm i\mu ) t} &= e^{\lambda t} e^{\pm i \mu t} \\ &=  \underbrace{e^{\lambda t}}_{\text{Real}} \underbrace{\left[ \cos(\mu t) \pm i \sin (\mu t)\right] }_{\text{Complex}}}
+\algn{y_{1,2}=e^{(\lambda  \pm i\mu ) t} &= e^{\lambda t} e^{\pm i \mu t} \\ &=  \underbrace{e^{\lambda t}}_{\text{Real}} \underbrace{[\underbrace{ \cos(\mu t)}_{\text{Real}} \pm\underbrace{ i \sin (\mu t)}_{\text{Imaginary}}]}_{\text{Complex Conjugates}}&y_1=\bar{y}_2&}
 
-We don't want complex solutions, try a linear combination of the two.
-
-\algn{\tilde{y}_1 & = \frac{y_1+y_2}{2}= \frac{e^{\lambda t + i\mu t} + e^{\lambda t - i\mu t}}{2}  & \\  \tilde{y}_1 & = \frac{e^{\lambda t}}{2} \left[\cos(\mu t) + \cancel{i \sin (\mu t) }+ \cos(\mu t) - \cancel{i \sin (\mu t)} \right]  = \frac{e^{\lambda t}}{2} 2\cos(\mu t) \\ &=e^{\lambda t} \cos(\mu t)   }
+We don't want imaginary solutions
 \vfill
-Similarly, $\tilde{y}_2=\dfrac{y_1-y_2}{2i}=\dfrac{e^{\lambda t + i\mu t} - i e^{\lambda t - i\mu t}}{2i} \quad \rightarrow \quad \tilde{y}_2=e^{\lambda t} \sin (\mu t)$
-
+\algn{\tilde{y}_1 & = \frac{y_1+y_2}{2}=\text{Re}(y_1) =e^{\lambda t} \cos(\mu t)   \\
+\tilde{y}_2&=\dfrac{y_1-y_2}{2i}=\text{Im}(y_1)=e^{\lambda t} \sin (\mu t)
+}
+\vfill
 }
 }
 

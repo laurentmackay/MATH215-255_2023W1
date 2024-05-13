@@ -1,0 +1,266 @@
+\input{notes.tex}
+
+\usetikzlibrary{arrows}
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+
+
+\begin{document}
+
+\section{Lecture 16}
+\subsection{Preamble}
+
+
+\subsection{The Heaviside Function}
+
+
+
+
+\slide[The Heaviside Step Function: $u(t-c)$  or $H(t-c)$ or $u_c(t)$]
+{
+\student{Used to model effects that "turn-on" at some time $c$.}\vfill
+\centerline{\tikzplot[\xcoord{3.5}{c}\ycoord{0}{\rarray{\\0}}\ycoord{2}{1}]{1}{7}{.5}{2.5}{t}{u(t-c)}{
+\draw[ultra thick, \studentcolor] (-1,0)--(3.5,0);
+\draw[ultra thick, \studentcolor] (3.5,2)--(7,2);
+\draw[ultra thick, dashed, \studentcolor] (3.5,0)--(3.5,2);
+\draw[\studentcolor] (3.5,0) node[opendot]{};
+\draw[\studentcolor] (3.5,2) node[opendot]{};
+\draw[->] (4,1.6)--(3.65,1.9) node[pos=0,yshift=-1em, xshift=3em]{$\underset{t\to c^+ }{\lim}u(t-c)=1$};
+\draw[->] (2.9,.4)--(3.4,.1) node[pos=0,yshift=.75em, xshift=-2.85em]{$ \underset{t\to c^- }{\lim} u(t-c)=0$};
+}}
+\vfill
+\[u(t-c) = \begin{cases}  0 & \text{if } t< c \\ 1 & \text{if } t> c  \end{cases}\]
+
+}
+\subsection{Piecewise Continuous Functions}
+\slide{
+\twomini[.45]{.5}{.5}{
+Write the piecewise function 
+\[g(t)=\begin{cases} 0 & t<1\\
+\frac14 t^2 & 1<t<3 \\
+0&t>3 \end{cases}\] in terms of the heaviside function.
+}{
+
+\tikzplot[\xcoord{3}{3}\xcoord{2}{2}\xcoord{1}{1}\ycoord{0}{\rarray{\\0}}\ycoord{1}{1}\ycoord{2}{2}]{.1}{4}{.5}{2.5}{t}{g(t)}{
+\draw[ultra thick, black] (-1,0)--(1,0);
+\draw[ultra thick, black] (3,0)--(7,0);
+\draw[ultra thick, dashed, black] (3,0)--(3,2.25);
+\draw[ultra thick, dashed, black] (1,0)--(1,0.25);
+\draw[black] (3,0) node[opendot]{};
+\draw[black] (3,2.25) node[opendot]{};
+\draw[black] (1,0) node[opendot]{};
+\draw[black] (1,0.25) node[opendot]{};
+\draw[black, ultra thick, domain=1:3] plot ({\x} ,{ 0.25*\x*\x} );
+}
+
+}
+\student{
+\[g(t) =\frac14 t^2\underbrace{u(t-1)}_{\carray{\text{turn on}\\\text{at $t=1$}}}\times \underbrace{(1-u(t-3))}_{\carray{\text{turn off}\\\text{at $t=3$}}}\]
+or 
+\[g(t) = \frac14 t^2 \underbrace{u(t-1)}_{\carray{\text{turn on}\\\text{at $t=1$}}} - \frac14 t^2 \underbrace{u(t-3)}_{\carray{\text{turn off}\\\text{at $t=3$}}}\]
+}
+}
+\subsection{Second Shift Theorem}
+\slide[Laplace Tranform of the Heaviside Function]{\vspace{-1em}
+\centerline{\student{\begin{tikzpicture}[xscale=2, yscale=2] \draw[] (0,0)--(0.5,0)--(0.5,0.3)--(1,0.3); \draw[] (-.15,0) node{\tiny 0}; \draw[] (-.15,0.3) node{\tiny 1}; \draw[] (0.5,.45) node{\tiny t=c};\end{tikzpicture}}}\vspace{-2em}
+\student{\algn{\lap{u(t-c)}&=\lapint{u(t-c)}= \lim_{A\to c^+}\int_A^\infty e^{-st}dt\\
+&\overset{s>0}{=}\lim_{A\to c^+}\frac1se^{-sA}\\
+&=\boxed{e^{-sc}\frac1s}=e^{-sc}\lap{1}}
+\vfill
+How about the more general pattern $e^{-sc}F(s)$?}
+\vfill
+\uline{Second Shift Theorem}
+\vfill
+\student{
+\[\boxed{\lap{f(t-c)u(t-c)} =e^{-sc}F(s)}\]
+}
+}
+\slide[Proof of Second Shift Theorem]{
+\algn{\lap{f(t-c)u(t-c)}&=\int_0^\infty e^{-st}\underbrace{f(t-c)u(t-c)}_{0 \text{ for } t<c}dt\\
+&=\int_c^\infty e^{-st}f(t-c)dt &\arr{l}{v=t-c\\dv=dt}\\
+&=\int_0^\infty e^{-s(v+c)}f(v)dv\\
+&= e^{-sc}\int_0^\infty e^{-sv}f(v)dv=e^{-sc}\lap{f(t)}\\\\
+\Aboxed{&\lap{f(t-c)u(t-c)} =e^{-sc}F(s) }
+}
+}
+
+\slide{\ex{Suppose $Y(s)=\frac{e^{-s}+e^{-2s} - e^{-3s} - e^{-4s}}{s}$, find and sketch $y(t)$.}
+\student{\algn{Y(s)&=\frac{e^{-s}}{s}+\frac{e^{-2s}}{s}-\frac{e^{-3s}}{s}-\frac{e^{-4s}}{s}\\
+&=e^{-s}\lap{1} + e^{-2s}\lap{1} -e^{-3s}\lap{1}-e^{-4s}\lap{1}\\
+&=\left[ u(t) \cdot 1\right]\evalat{t=t-1}{} \dots\\
+&=u(t-1)  + u(t-2) - u(t-3) -u(t-4)
+}\vfill
+}
+\tikzplot[\xcoord{1}{1}\xcoord{2}{2}\xcoord{3}{3}\xcoord{4}{4}\xcoord{5}{5}\xcoord{6}{6}\ycoord{1}{1}\ycoord{2}{2}\ycoord{3}{3}]{.1}{7}{.1}{3.2}{t}{y(t)}{
+\student{
+\draw[ultra thick] (0,0)--(1,0);
+\draw[ dashed, ultra thick] (1,0)--(1,1);
+\draw[ultra thick] (1,1)--(2,1);
+\draw[dashed, ultra thick] (2,1)--(2,2);
+\draw[ultra thick] (2,2)--(3,2);
+\draw[ dashed, ultra thick] (3,2)--(3,1);
+\draw[ultra thick] (3,1)--(4,1);
+\draw[ dashed, ultra thick] (4,1)--(4,0);
+\draw[ ultra thick] (4,0)--(7,0);
+}
+}
+}
+
+
+\slide{
+\ex{Suppose $Y(s)=e^{-4s} \frac{3}{9+s^2}$, find $y(t)$.}
+
+\student{
+\algn{y(t) &=  \left[u(t) \lapinv{\frac{3}{9+s^2}} \right]_{t=t-4}\\
+&= u(t-4) \left[ \sin(3t) \right]_{t=t-4}\\
+&= u(t-4)  \sin(3(t-4))}
+
+}
+\vfill
+\ex{Suppose $Y(s)=e^{-4s} \frac{3}{9+(s+11)^2}$, find $y(t)$.}
+
+\student{
+\algn{y(t) &=  \left[ u(t) \lapinv{\frac{3}{9+(s+11)^2}} \right]_{t=t-4}\\
+&= u(t-4) \left[ e^{-11 t} \lapinv{\frac{3}{9+s^2}} \right]_{t=t-4}\\
+&= u(t-4)  e^{-11(t-4)}   \left[ \sin(3t) \right]_{t=t-4}
+}
+}
+}
+
+
+
+\slide{
+\twomini[.45]{.5}{.5}{
+Find the Laplace transform of 
+\[g(t)=\begin{cases} 0 & t<1\\
+\frac14t^2 & 1<t<3 \\
+0&t>3 \end{cases}\].
+}{
+
+\tikzplot[\xcoord{3}{3}\xcoord{2}{2}\xcoord{1}{1}\ycoord{0}{\rarray{\\0}}\ycoord{1}{1}\ycoord{2}{2}]{.1}{4}{.5}{2.5}{t}{g(t)}{
+\draw[ultra thick, black] (-1,0)--(1,0);
+\draw[ultra thick, black] (3,0)--(7,0);
+\draw[ultra thick, dashed, black] (3,0)--(3,2.25);
+\draw[ultra thick, dashed, black] (1,0)--(1,0.25);
+\draw[black] (3,0) node[opendot]{};
+\draw[black] (3,2.25) node[opendot]{};
+\draw[black] (1,0) node[opendot]{};
+\draw[black] (1,0.25) node[opendot]{};
+\draw[black, ultra thick, domain=1:3] plot ({\x} ,{ 0.25*\x*\x} );
+}
+
+}
+\student{
+\algn{g(t) &= \frac14t^2 u(t-1) - \frac14t^2 u(t-3)\\
+&=f_1(t-1) u(t-1) + f_2(t-3) u(t-3)\\
+G(s)&=e^{-s}F_1(s) - e^{-3s}F_2(s)\intertext{Need to find $f_1$ and $f_2$.  \hspace{2em}Let $z_1=t-1 \;\; \Rightarrow \;\; t=z_1+1$}
+f_1(t) &=\frac14t^2 = \frac14 (z_1+1)^2\\ f_1(z_1)&= \frac14z_1^2+\frac12z_1+\frac14 \quad \Rightarrow F_1(s) = \frac{1}{2s^3}+\frac{1}{2s^2}+\frac1{4s}}
+}
+}
+
+
+\slide{
+\student{Let Let $z_2=t-3 \;\; \Rightarrow \;\; t=z_2+3$
+\algn{f_2(t-3) &= \frac14t^2 =\frac14(z_2+3)^2\\ &=\frac14(z_2^2+6z_2+9) \Rightarrow F_2(s) = \frac{1}{2s^3} + \frac3{2s^2}+\frac{9}{4s} \\\\
+G(s)&=\left(   \frac{1}{2s^3}+\frac{1}{2s^2}+\frac1{4s}  \right)e^{-s} - \left( \frac{1}{2s^3} + \frac3{2s^2}+\frac{9}{4s} \right)e^{-3s}
+}
+
+}
+}
+
+\slide{\ex{$y\p+6y=\begin{cases}
+0 & t<1\\
+\frac14 t^2 & t>1
+\end{cases}$ \hspace{1.5em} with $y(0)=1$}
+\student{\algn{ sY(s)-&1+6Y(s)=\left(   \frac{1}{2s^3}+\frac{1}{2s^2}+\frac1{4s}  \right)e^{-s} \\
+Y(s)&=\left(   \frac{1}{2(s+6)s^3}+\frac{1}{2(s+6)s^2}+\frac1{4s(s+6)}  \right)e^{-s} +\frac{1}{s+6}\intertext{Apply partial fraction decomp. to each term}
+\frac{1}{2s^3(s+6)}&=-\frac{1}{72 s^2}+\frac{1}{12 s^3}+\frac{1}{432 s}-\frac{1}{432 (s+6)}\\
+\frac{1}{2s^2 (s+6)}&=\frac{1}{12 s^2}-\frac{1}{72 s}+\frac{1}{72 (s+6)}\\
+\frac{1}{4s(s+6)}&=\frac{1}{24 s}-\frac{1}{24 (s+6)}\\
+Y(s) &=\frac{1}{432} \left(\frac{36}{ s^3}+\frac{30} {s^2}+\frac{13}{ s} -\frac{13}{ s+6} \right)e^{-s}+\frac{1}{s+6}
+}
+}
+}
+\slide{\vspace{-1.25em}
+\[Y(s) =\frac{1}{432} \left( \frac{36}{ s^3}+\frac{30} {s^2}+\frac{13}{ s} -\frac{13}{ (s+6)} \right) e^{-s}+\frac{1}{s+6}\]
+\student{
+\algn{y(t)&=\frac{1}{432}u(t-1)\left[ 18 t^2 + 30 t+13 -13 e^{6t} \right]_{t=t-1} + e^{-6t}\\
+&=\frac{1}{432}u(t-1)\left( 18 (t-1)^2 +30(t-1)+13-13e^{6(t-1)} \right) + e^{-6t}}
+}
+\vfill
+\centerline{\includegraphics[width=6.5cm]{images/Heaviside_kink.pdf}}
+}
+
+\subsection{Convolution Theorem}
+\slide[Products in Laplace Space]{\vspace{-1em}
+The second shift theorem is a special case of a product in Laplace space\[\lap{f(t-c)u(t-c)} = \underbrace{e^{-sc}}_{G(s)}F(s)\]\vfill
+Inversion of the general case requires the use of a convolution
+\[\lapinv{F(s) G(s) } = (f * g)(t) = \intop_0^t f(\tau)g(t-\tau) d\tau\] 
+\ex{$\lapinv{\frac{e^{-3s}}{s} \frac{2}{s^2} }$ \student{Note:  $\lapinv{e^{-3s}\frac{2}{s^3}}=u(t-3)(t-3)^2$}}
+\student{\algn{&=\intop_0^t u(\tau-3) 2(t-\tau) d \tau =\begin{cases} 0&t<3 \\ \intop_3^t 2(t-\tau) d \tau  & t>3 \end{cases} \\
+&=\begin{cases} 0&t<3 \\  \left[2t\tau-\tau^2\right]_{\tau=3}^{t} & t>3 \end{cases}  =  u(t-3) (t-3)^2
+}}
+}
+
+\begin{comment}
+\slide{\ex{$y\p+6y=u(t-1)\student{=\begin{cases}
+0 & t<1\\
+1 & t\geq1
+\end{cases}}$ \hspace{1.5em} with $\larray{y(0)=y_0\\y'(0)=v_0}$}
+\student{\twomini[.55]{.6}{.3}{\algn{ sY-&y_0+6Y=\frac{e^{-s}}{s}\\
+Y&=\frac{\frac{e^{-s}}{s}+y_0}{s+6}=\frac{e^{-s}}{s(s+6)}+\frac{y_0}{s+6}\\
+Y(s)&=\frac{1}{6}\frac{e^{-s}}{s}-\frac{1}{6}\frac{e^{-s}}{s+6}+\frac{y_0}{s+6}\\
+& \downarrow \mathcal{L}^{-1}\\
+y(t)&=\frac16 u(t-1)-\frac16 e^{-6(t-1)} u(t-1)+y_0e^{-6t}
+}\vfill}{$\frac{1}{s(s+6)}=\frac{A}{s}+\frac{B}{s+6}$\\~\\$\Rightarrow 1=A(s+6)+Bs $\\~\\$\Rightarrow \arr{l}{1=6A\\0=A+B}$ \\~\\$\Rightarrow \arr{l}{A=\frac16\\B=-\frac16}$ \vfill}}
+\tikzplot[
+\student{\xcoord{3}{1} \ycoord{1.25}{\frac16}}
+]{.1}{10}{.1}{1.5}{t}{y(t)}{
+\student{
+\draw[domain=0:2, thick, samples=100] plot ({\x*1.5}, {.8*exp(-\x)});
+\draw[domain=2:10, thick, samples=100] plot ({\x*1.5}, {.8*exp(-\x)+(1-exp(-(\x-2)))*1.25});
+\draw[domain=0:10, thick, dashed, samples=100] plot ({\x*1.5}, {1.25});
+}}
+}
+
+
+
+\slide{\ex{$y\pp+2y\p+5y=u(t-5)-u(t-15)$, \quad $y(0)=0.1$, $y\p(0)=0$}
+\student{
+\algn{s^2Y(s)-&0.1s+2sY(s)-0.2+5Y(s)=\frac{e^{-5s}}{s} - \frac{e^{-15s}}{s}\\
+Y(s)&= \frac{  \paren{\frac{e^{-s}}{s} - \frac{e^{-2s}}{s}} + 0.1s+0.2}{s^2+2s+5}\\
+&=  \paren{ e^{-5s} - e^{-15s}}  \underbrace{\frac{ 1}{s(s^2+2s+5)}}_{F(s)}+   \underbrace{\frac{ 0.1s +0.2}{s^2+2s+5}}_{\text{homogeneous part}}\\
+s^2+2s+5 &= (s+1)^2+4 \Rightarrow\text{homog. part} = \underbrace{\frac{0.1s}{ (s+1)^2+4}}_{\text{exp} \cdot \cos}  + \underbrace{\frac{0.2}{ (s+1)^2+4}}_{\text{exp} \cdot \sin}
+\\\\
+y(t)&=u(t-5)\left[ \lapinv{F(s)} \right]_{t=t-5}\\
+&\phantom{=} - u(t-15)\left[ \lapinv{F(s)} \right]_{t=t-15}\\
+&\phantom{=} + 0.1e^{-t}\cos(2t)+0.1 e^{-t}\sin(2t)
+}
+}
+}%end slide
+
+\settoggle{covered}{false}
+\slide{$\lapinv{\frac{1}{s(s^2+2s+5)}}=\;???$ 
+
+\student{
+\algn{F(s)=\frac{1}{s(s^2+2s+5)} & = \frac{A}{s} +\frac{Bs+C}{s^2+2s+5}\\
+1&=As^2+2As+5A + Bs^2+Cs\\
+\text{constant terms: } 1&= 5A \qquad \Rightarrow A=\frac15 \\
+\text{$s$ terms: } 0 &= 2A+C   \qquad \Rightarrow C=-2A=-\frac25\\
+\text{$s^2$ terms: } 0 &=	A+B  \qquad \Rightarrow B=-A=-\frac15\\
+F(s) &= \frac{1}{5s} - \frac15 \frac{s+2}{(s+1)^2+2^2}\\
+&=  \frac{1}{5s} -  \frac15 \paren{\frac{s+1}{(s+1)^2+2^2}  - \frac{1}{(s+1)^2+2^2}}  \\
+f(t) &= \frac15 \paren{1-e^{-t}\paren{cos(2t) -\frac12 \sin(2t)}}}
+}
+}
+
+\slide{\vspace{-2em}
+\algn{y(t)&=u(t-5)\frac15 \paren{1-e^{-(t-5)}\paren{cos(2(t-5)) -\frac12 \sin(2(t-5))}}\\
+&\phantom{=} - u(t-15)\frac15 \paren{1-e^{-(t-15)}\paren{cos(2(t-15)) -\frac12 \sin(2(t-15))}}\\\
+&\phantom{=} + 0.1e^{-t}(\cos(2t)+\sin(2t))}
+
+\vspace{1em}
+\centerline{\includegraphics[width=8.5cm]{images/Heaviside_jiggle.pdf}}
+}
+\end{comment}
+
+\end{document}

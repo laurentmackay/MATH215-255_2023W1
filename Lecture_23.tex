@@ -1,0 +1,119 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\settoggle{covered}{true}
+\begin{document}
+\section{Lecture 23}
+\subsection{Preamble}
+
+\slide[Recall:  Homogeneous Systems of $n$ ODEs]{\vspace{-1.5em}
+\[ \dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x}\] 
+has $n$ linearly independent \alert{fundamental solutions} \vspace{-.5em} \[ \left\{ \vec{x}_1(t), \;\vec{x}_2(t),\;\dots, \;\vec{x}_n(t) \right\} \]
+and its general solution is given by \vspace{-0.5em} \[\vec{x}(t) = c_1  \vec{x}_1(t)  +c_2 \vec{x}_2(t)  + \cdots + c_n\vec{x}_n(t) \]
+ \vspace{-2.5em}
+ 
+ or 
+ 
+ \vspace{-2.5em}
+ \[\vec{x} = \mathbf{X}(t) \vec{c} \;\;\text{where}\;\; \mathbf{X}(t) =\mat{cccc}{\vec{x}_1(t)  & \vec{x}_2(t)  & \cdots &\vec{x}_n(t) } \;\; \student{\text{and } \dd{}{t}\mathbf{X} = \mathbf{AX}} \]
+\vspace{-.5em} 
+\hrule
+\vspace{1em}
+\student{
+\twomini[.2]{.55}{.45}{Q: Non-homogeneous systems?
+\[ \dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x} + \vec{f}(t)\]
+}{
+\enum{\item Integrating Factors \item Undetermined Coefficients \item \uline{Variation of Parameters}}
+}
+
+}
+
+}
+\subsection{Variation of Parameters}
+\slide[Variation of Parameters: $\dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x} + \vec{f}(t)$ ]{\vspace{-1em}
+Due to the linearity of the DE, we know the solution structure is\vspace{-0.5em}
+\[\vec{x}(t) =\underbrace{\vec{x}_h(t)}_{\text{homog. part}}+\underbrace{\vec{x}_p(t)}_{\text{particular part}} \quad \text{where}\;\;\vec{x}_h = \mathbf{X}(t) \vec{c}\quad \text{and}\quad \dd{}{t}\mathbf{X} =\mathbf{A}\mathbf{X}  \]\vspace{-1.25em}
+\student{
+\algn{&&\text{LHS:}\quad\dd{}{t}\vec{x}_p =  \mathbf{X}'\vec{u}+\mathbf{X}\vec{u}' \\
+\text{\uline{Guess:} }\vec{x}_p&= \mathbf{X}(t) \vec{u}(t)&\phantom{\text{LHS:}\quad\dd{}{t}\vec{x}}=\mathbf{A}\mathbf{X}\vec{u}+\mathbf{X}\vec{u}' \\
+\cancel{\mathbf{A}\mathbf{X}\vec{u}}+\mathbf{X}\vec{u}' &= \cancel{\mathbf{A}\mathbf{X}\vec{u}}+\vec{f}(t)&\text{RHS:}\quad\phantom{\dd{}{t}\vec{x}}\phantom{=}\mathbf{A}\mathbf{X}\vec{u}+\vec{f}(t)\\\\
+\vec{u}' &= \mathbf{X}^{-1}\vec{f}(t) =\vec{g}(t) &\text{where $\vec{g}$ solves }\mathbf{X}\vec{g}=\vec{f}(t)\\\\
+\vec{u}(t) &= \int \underbrace{ \mathbf{X}^{-1}(t)\vec{f}(t)}_{\vec{g}(t)} dt \Aboxed{\vec{x}_p&=\mathbf{X}(t) \int \mathbf{X}^{-1}(t)\vec{f}(t) dt }}
+}
+}
+
+\settoggle{covered}{false}
+
+\slide{
+Suppose $\vec{x}_1=\colvec{1\\-1}e^{-2t}$ and $\vec{x}_2=\colvec{1\\1}e^{4t}$ solve $\dd{}{t}\vec{x}=\mat{cc}{1&1\\-1&1}\vec{x}$.
+\[\text{Find the particular solution to }\quad \dd{}{t}\vec{x}=\mat{cc}{1&1\\-1&1}\vec{x}+\colvec{2e^{t}\\e^{-2t}}.\]\vfill
+\student{
+\[\text{Fundamental Matrix:}\qquad \mathbf{X} = \mat{cc}{e^{-2t} &e^{4t}\\-e^{-2t} &e^{4t}  }\]
+\algn{
+\vec{x}_p &= \mathbf{X}\int \vec{g}(t)dt &\text{where }  \mathbf{X}\vec{g}&=\colvec{2e^{t}\\e^{-2t}}\\
+  &\mat{cc|c}{e^{-2t} &e^{4t}&2e^{t} \\-e^{-2t} &e^{4t}&e^{-2t} }&  \overset{R_1+R_2\to R_1}{\longrightarrow}&\mat{cc|c}{0 &2e^{4t}&2e^{t}+e^{-2t} \\-e^{-2t} &e^{4t}&e^{-2t}  }\\
+&\overset{R_1-\frac12R_2\to R_2}{\mat{cc|c}{0 &2e^{4t}&2e^{t}+e^{-2t} \\-e^{-2t} &0&\frac12e^{-2t}-e^t  }} &&\larray{2e^{4t}g_2 = 2^e{t}+e^{-2t}\\-e^{-2t}g_1 =\frac12e^{-2t}-e^t }\\
+\vec{g}&=\colvec{-\frac12+e^{3t}\\e^{-3t}+\frac12 e^{-6t}}
+}
+}
+}
+
+\slide{
+\[\vec{x}_p =  \underbrace{\mat{cc}{e^{-2t} &e^{4t}\\-e^{-2t} &e^{4t}  } }_{\text{fund. matrix }\mathbf{X}}\underbrace{\int g(t)dt}_{\vec{u}'dt}  \quad \text{with}\;\; \vec{g}= \colvec{-\frac12+e^{3t}\\e^{-3t}+\frac12 e^{-6t}} \]
+\student{\algn{
+ \vec{u}(t) = \int \vec{g}(t) dt & =  \colvec{-\frac{t}{2}+\frac13e^{3t}\\-\frac13e^{-3t}-\frac1{12} e^{-6t}}\\\\
+ \vec{x}_p &= \mathbf{X}\vec{u}(t) \\
+ & = \colvec{-\frac{t}2e^{-2t} +\cancel{\frac13e^t}-\cancel{\frac13e^t}-\frac12 e^{-2t}\\ \frac{t}2e^{-2t} -\frac13e^t-\frac13e^t-\frac12 e^{-2t}}\\\\
+ =\frac{t}{2}e^{-2t}\colvec{-1\\1}&+\frac13e^t\colvec{0\\-1}-\frac{1}{12}e^{-2t}\colvec{1\\1}
+}}
+}
+
+\slide{
+
+Solve $\dd{}{t} \vec{x}=\mat{cc}{ 0&1\\-4/t^2&4/t}\vec{x}+\colvec{ 0\\t}$, where two linearly independent solutions of the homogeneous equation are \[\vec{x}_1=t^3\colvec{ t\\4}, \quad\text{and}\quad \vec{x}_2=\colvec{t\\1}.\]
+
+\student{
+\[\text{Fundamental Matrix:}\qquad \mathbf{X} = \mat{cc}{t^4&t\\4t^3&1  }\]
+\algn{
+\vec{x}_p &= \mathbf{X}\int \vec{g}(t)dt &\text{where } \mathbf{X}\vec{g}&=\colvec{0\\t}\\
+  &\mat{cc|c}{t^4&t&0\\4t^3&1&t  }&  \overset{R_1-tR_2\to R_1}{\longrightarrow}&\mat{cc|c}{-3t^4 &0&-t^2 \\4t^3&1&t    }\\
+&\overset{R_1-\frac{4}{3t}R_2\to R_2}{\mat{cc|c}{-3t^4 &0&-t \\0 &1&-\frac{t}3 }} &&\larray{-3t^4g_1 = -t^2 \\g_2 =-\frac{t}3}\\
+\vec{g}&=\colvec{\frac13 t^{-2}\\-\frac{t}3}
+}
+}
+
+
+}
+
+
+\slide{
+\[\vec{x}_p =  \underbrace{\mat{cc}{t^4&t\\4t^3&1  } }_{\text{fund. matrix }\mathbf{X}}\underbrace{\int g(t)dt}_{\vec{u}'dt}  \quad \text{with}\;\; \vec{g}= \colvec{\frac13 t^{-2}\\-\frac{t}3} \]\vfill
+\student{\algn{
+ \vec{u}(t) = \int \vec{g}(t) dt & =  \colvec{-\frac13 t^{-1}\\ -\frac{t^2}{6}}\\\\
+ \vec{x}_p &= \mathbf{X}\vec{u}(t) \\
+ & = \colvec{ -\frac13 t^{3} -\frac{t^3}{6}\\ -\frac43 t^2  -\frac16 t^2}=\colvec{ -\frac12 t^3 \\ -\frac32 t^2 } \\\\&=-\frac{t^2}2 \colvec{t\\3}
+}}\vfill
+}
+
+\slide{
+\[\vec{x} = \vec{x}_h + \vec{x}_p \]
+\student{
+\[ \vec{x} = c_1 t^3\colvec{ t\\4} + c_2 \colvec{t\\1} -  \frac{t^2}2 \colvec{t\\3} \]
+\vspace{.5em}}
+\hrule
+\vspace{.5em}
+Solve the IVP  $\dd{}{t} \vec{x}=\mat{cc}{ 0&1\\-4/t^2&4/t}\vec{x}+\colvec{ 0\\t}$ with $\vec{x}(1)=\colvec{3\\ - \frac32}$
+\student{
+\algn{\vec{x}(1) &= c_1\colvec{ 1\\4} + c_2 \colvec{1\\1} +  \colvec{\nicefrac12\\\nicefrac32} = \colvec{3\\\frac32}\\
+\text{\uline{bottom row:}}\;\;&4c_1+c_2 = \frac32-\frac32 =0\quad \Rightarrow c_2=-4c_1\\
+\text{\uline{top row:}}\;\;&c_1+c_2=3+\frac12 =\frac72 \\
+-3c_1&=\frac52 \quad \Rightarrow \boxed{c_1=-\frac76,\;\; c_2=\frac{28}{6}}}
+
+}
+
+}
+
+\end{document}

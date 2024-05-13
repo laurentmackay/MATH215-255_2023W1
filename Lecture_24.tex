@@ -1,0 +1,133 @@
+\input{notes.tex}
+
+
+\iftoggle{dualscreen}{\setbeameroption{show notes on second screen=right}}{}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+
+\begin{document}
+\section{Lecture 24}
+\subsection{Preamble}
+
+
+\slide[Recall: Solutions flows  and  fixed points (critical points)]{
+
+The origin $\vec{0}$ is the \uline{unique} fixed point for the linear system  $\dd{}{t}\vec{x} = \mathbf{A}(t) \vec{x}$.
+How about the (constant) non-homogeneous linear system $\dd{}{t}\vec{x} = \mathbf{A} \vec{x}+\vec{f}$?
+\student{\[  \vec{0} =   \mathbf{A} \vec{x}^*+\vec{f} \quad \Rightarrow\quad \vec{x}^* = - \mathbf{A}^{-1}\vec{f} \qquad \underset{\text{ \normalsize or critical point}}{\text{is the fixed point}} \]
+
+\centerline{A constant inhomogeneity just shifts everything from the origin.}
+}
+
+\vfill
+The \uline{global behaviour} of solutions is fully determined by the eigenvalues and eigenvectors of $\mathbf{A}$:\vfill
+\enum{
+\item  Eigendirections with real eigenvalues and:\vfill
+\subitem{~\student{$\lambda<0$ attract solutions towards the fixed point.} \vfill\item  ~\student{ $\lambda>0$ repel solutions away from the fixed point.}}\vfill
+\item Complex conjugate eigenvalues \student{produce  oscillations.}
+}
+}
+\subsection{Nonlienar Systems}
+\slide[2-Dimensional Autnomous Nonlinear Systems]{\vspace{-1em}
+Consider the autonomous nonlinear system \[\dd{}{t}x=f(x,y),\qquad \dd{}{t}y=g(x,y)\]
+where $f$ and $g$ are nonlinear function with no explicit time-dependence.\vfill
+\student{
+This can be written as 
+\[\dd{}{t}\colvec{x\\y} = \colvec{f(x,y)\\ g(x,y)}  \quad \text{or}\quad \dd{}{t}\vec{x} = \vec{f}(\vec{x}) \]
+\vfill
+We can plot the vector field $\colvec{x'\\y'}$ over the $(x,y)$-plane.
+\vfill
+\centerline{This vector field gives us qualitative information about solution flows.}
+}
+}
+
+\slide{
+\ex{The vector field for the the system $x'=y$ and $y'=-x+x^2$ }\vfill
+\centerline{\includegraphics[width=.6\columnwidth]{images/nlin-1b-mbx.pdf}}
+\vfill
+\student{
+This system has two critical points:\vspace{-1em}
+\[ \underset{\text{\normalsize (center)}}{x=y=0} \qquad \underset{\text{\normalsize (saddle)}}{x=1, \quad y=0}\ \]
+}
+}
+
+
+
+\subsection{Linearization}
+\slide[Linearization \& Local Solution Flow]{\vspace{-1em}
+To classifiy critical points of a nonlinear system, we linearize it around its critical points $\vec{x}^*$ (e.g., for a 2D system $\vec{x}^* = \colvec{x^*\\ y^*}$).
+\vfill
+\hrule
+\vfill
+Any solution that starts at $\vec{x}^*$ stays there forever. \vfill
+
+So we perturb the fixed point by  setting $\vec{x}(t)=\vec{x}^*+\vec{u}(t)$ where $\vec{u}(0)$ is infinitesimally small.\vfill 
+\student{Thus we are interested in 
+\algn{\dd{}{t} \vec{x} &= \vec{f}(x), \quad\text{with } \vec{x}(0) = \vec{x}^*+\vec{u}(0) \quad \text{where} \quad \vec{u}(0) \approx \vec{0}\intertext{expanding $\vec{x}(t)$ we get}
+&= \vec{f}(\vec{x}^*+\vec{u}) }}
+
+}
+
+\slide[Linearization \& Local Solution Flow]{\vspace{-1em}
+To classifiy critical points of a nonlinear system, we linearize it around its critical points $\vec{x}^*$ (e.g., for a 2D system $\vec{x}^* = \colvec{x^*\\ y^*}$).
+\vfill
+\hrule
+\vspace{.25em}
+\[\dd{}{t}\vec{u} = \vec{f}(\vec{x}^*+\vec{u}) \quad \text{where} \quad \vec{u}(0) \approx \vec{0} \]
+
+\student{make a first-order Taylor expansion in $\vec{u}$ around $\vec{u}=\vec{0}$
+\algn{
+\dd{}{t}\vec{x} &\approx \cancelto{\vec{0}}{\vec{f}(\vec{x}^*)}+\pd{\vec{f}(\vec{x})}{\vec{x}}\evalat{\vec{x}=\vec{x}^*}{}\vec{u}+\dots+h.o.t.
+\intertext{where is $\pd{\vec{f}}{\vec{x}}$ called the Jacobian matrix. For our 2D system, it is given by}
+\mathbf{J}=\pd{\vec{f}}{\vec{x}}&=\mat{cc}{\pd{}{x}f(x,y)&\pd{}{y} f(x,y) \\
+ \pd{}{x}g(x,y)&\pd{}{y} g(x,y)}=\mat{cc}{f_x&f_y\\g_x&g_y}
+}
+}
+}
+
+\slide[Linearization \& Local Solution Flow]{\vspace{-1em}
+To classifiy critical points of a nonlinear system, we linearize it around its critical points $\vec{x}^*$ (e.g., for a 2D system $\vec{x}^* = \colvec{x^*\\ y^*}$).
+\hrule
+\vspace{.5em}
+After the subsititution $\vec{u}=\vec{x}-\vec{x}^*$, near the critical point $\vec{x}^*$
+\algn{\dd{}{t}\colvec{x\\y}   &\approx \mathbf{J}^*\left(\colvec{x\\y}-\colvec{x^*\\y^*}\right) \quad \text{where }  \mathbf{J}^*=\mat{cc}{f_x(x^*,y^*)&f_y(x^*,y^*)\\g_x(x^*,y^*)&g_y(x^*,y^*)}\\\\
+\student{\dd{}{t} \vec{x}}&\student{\approx\mathbf{J}^*\vec{x} - \underbrace{\mathbf{J}^*\vec{x}^*}_{\text{constant}} = \text{a (constant) non-homogeneous linear system}  }}
+\vfill
+\student{
+This linear approximation holds \uline{locally}. \vfill Thus the \uline{local behaviour} of solutions near critical points is determined by the  eigenvalues and eigenvectors of $\mathbf{J}$.
+}
+
+}
+
+\slide{
+\ex{Find the Jaobian matrix for the system }
+\[x'=f(x,y),\quad y'=g(x,y)\quad \text{with} \quad f(x,y)=y, \quad g(x,y)=-x+x^2\]
+\[\mathbf{J} =\mat{cc}{f_x&f_y\\g_x&g_y} =\student{ \mat{ccc}{0&&1\\2x-1&&0}}\]
+\vfill
+\ex{Find a linear approximation to the above system at the two following critical points}\vfill
+\twomini[.4]{.5}{.5}{
+\centerline{$\uline{x=y=0}$}
+\student{\[\dd{}{t} \colvec{x\\y} \approx  \mat{cc}{0&1\\-1&0} \colvec{x\\y}\] }
+}{
+\centerline{$\uline{x=1, \quad y=0}$}
+\student{\[\dd{}{t} \colvec{x\\y} \approx  \mat{cc}{0&1\\1&0} \colvec{x-1\\y} \] }
+}
+
+}
+
+
+\slide[Approximate Local Solution Flows]{
+
+\twomini[.4]{.5}{.5}{
+\centerline{$\uline{x=y=0}$}
+\[\dd{}{t} \colvec{x\\y} \approx  \mat{cc}{0&1\\-1&0} \colvec{x\\y}\] 
+Eigenvalues: $\pm i $ \hspace{1em}\student{(center)}\\~\\
+}{
+\centerline{$\uline{x=1, \quad y=0}$}
+\[\dd{}{t} \colvec{x\\y} \approx  \mat{cc}{0&1\\1&0} \colvec{x-1\\y}\] 
+Eigenvalues: $\pm1 $ \hspace{1em} \student{(saddle)}
+}\vfill
+\centerline{\includegraphics[width=.9\columnwidth]{images/nlin-1b-lin-00-01-mbx.pdf}}
+}
+
+\end{document}
